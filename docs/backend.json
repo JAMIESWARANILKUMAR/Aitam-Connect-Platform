@@ -1,0 +1,122 @@
+
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Represents a user in the AITAM Connect system.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Full name or preferred name of the user."
+        },
+        "designation": {
+          "type": "string",
+          "description": "User's role (e.g., 'Student', 'Senior', 'Alumni')."
+        },
+        "profileImageUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the user's profile image."
+        },
+        "totalRespondedQuestions": {
+          "type": "integer",
+          "description": "A count of how many questions the user has contributed a consolidated answer to."
+        }
+      },
+      "required": ["name", "designation", "totalRespondedQuestions"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "Represents a question asked by a user.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "The ID of the user who asked the question."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the question was created."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ACTIVE", "ARCHIVED", "DELETED"],
+          "description": "The lifecycle status of the question."
+        },
+        "aiStatus": {
+          "type": "string",
+          "enum": ["PENDING", "PROCESSING", "COMPLETE", "FAILED"],
+          "description": "The status of the AI answer synthesis process."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title of the question."
+        },
+        "description": {
+          "type": "string",
+          "description": "The detailed description of the question."
+        },
+        "answerCount": {
+          "type": "integer",
+          "description": "The number of raw answers submitted."
+        },
+        "consolidatedAnswer": {
+          "type": "string",
+          "description": "The final AI-generated answer in Markdown format."
+        }
+      },
+      "required": ["authorId", "createdAt", "status", "aiStatus", "title", "description"]
+    },
+    "Answer": {
+      "title": "Answer",
+      "description": "Represents a raw answer submitted by a user to a question.",
+      "type": "object",
+      "properties": {
+        "authorId": {
+          "type": "string",
+          "description": "The ID of the user who submitted the answer."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the answer was submitted."
+        },
+        "answerText": {
+          "type": "string",
+          "description": "The text content of the answer."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["PENDING_AI_ANALYSIS", "PROCESSED"],
+          "description": "The processing status of the raw answer."
+        }
+      },
+      "required": ["authorId", "createdAt", "answerText", "status"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com", "password"]
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Stores public-facing user profile information."
+    },
+    "/questions/{questionId}": {
+      "schema": {
+        "$ref": "#/entities/Question"
+      },
+      "description": "Stores the main question document, including the final consolidated answer."
+    },
+    "/questions/{questionId}/answers/{answerId}": {
+      "schema": {
+        "$ref": "#/entities/Answer"
+      },
+      "description": "Subcollection for storing all raw answers submitted for a question before AI synthesis."
+    }
+  }
+}

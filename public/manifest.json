@@ -1,0 +1,21 @@
+{
+  "name": "AITAM Connect",
+  "short_name": "AITAM Connect",
+  "description": "A Community Q&A Platform for Aditya Institute of Technology and Management (AITAM)",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1890ff",
+  "icons": [
+    {
+      "src": "https://adityatekkali.edu.in/assets/images/logo/logo3.webp",
+      "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://adityatekkali.edu.in/assets/images/logo/logo3.webp",
+      "type": "image/webp",
+      "sizes": "512x512"
+    }
+  ]
+}

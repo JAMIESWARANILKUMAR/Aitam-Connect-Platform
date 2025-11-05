@@ -1,0 +1,142 @@
+{
+  "loginPage": {
+    "url": "https://picsum.photos/seed/login/1200/800",
+    "dataAiHint": "college campus"
+  },
+  "registerPage": {
+    "url": "https://picsum.photos/seed/register/1200/800?grayscale",
+    "dataAiHint": "college building"
+  },
+  "hero": {
+    "url": "https://i.postimg.cc/655MxtH8/IMG-20250912-WA0004.jpg",
+    "dataAiHint": "college campus"
+  },
+  "galleryCampus": {
+    "url": "https://picsum.photos/seed/aitam-campus-new/600/400",
+    "dataAiHint": "college campus"
+  },
+  "galleryLibrary": {
+    "url": "https://picsum.photos/seed/aitam-library-new/600/400",
+    "dataAiHint": "college library"
+  },
+  "galleryEvent": {
+    "url": "https://picsum.photos/seed/aitam-event-new/600/400",
+    "dataAiHint": "college event"
+  },
+  "leadershipDirector": {
+    "url": "https://picsum.photos/seed/director/400/400",
+    "dataAiHint": "person face"
+  },
+  "leadershipPrincipal": {
+    "url": "https://picsum.photos/seed/principal/400/400",
+    "dataAiHint": "person face"
+  },
+  "leadershipPresident": {
+    "url": "https://picsum.photos/seed/president/400/400",
+    "dataAiHint": "person face"
+  },
+  "dean1": {
+    "url": "https://picsum.photos/seed/dean1/400/400",
+    "dataAiHint": "person face"
+  },
+  "dean2": {
+    "url": "https://picsum.photos/seed/dean2/400/400",
+    "dataAiHint": "person face"
+  },
+  "dean3": {
+    "url": "https://picsum.photos/seed/dean3/400/400",
+    "dataAiHint": "person face"
+  },
+  "dean4": {
+    "url": "https://picsum.photos/seed/dean4/400/400",
+    "dataAiHint": "person face"
+  },
+  "newsAutonomous": {
+    "url": "https://picsum.photos/seed/autonomous-news/600/400",
+    "dataAiHint": "certificate award"
+  },
+  "newsNaac": {
+    "url": "https://picsum.photos/seed/naac-news/600/400",
+    "dataAiHint": "trophy celebration"
+  },
+  "newsTechFest": {
+    "url": "https://picsum.photos/seed/tech-fest-news/600/400",
+    "dataAiHint": "tech conference"
+  },
+  "alumni1": {
+    "url": "https://picsum.photos/seed/alumni1/100/100",
+    "dataAiHint": "person face"
+  },
+  "alumni2": {
+    "url": "https://picsum.photos/seed/alumni2/100/100",
+    "dataAiHint": "person face"
+  },
+  "alumni3": {
+    "url": "https://picsum.photos/seed/alumni3/100/100",
+    "dataAiHint": "person face"
+  },
+  "alumni4": {
+    "url": "https://picsum.photos/seed/alumni4/100/100",
+    "dataAiHint": "person face"
+  },
+  "testimonialKSaiSathwik": {
+    "url": "https://picsum.photos/seed/K. Sai Sathwik/40/40",
+    "dataAiHint": "person face"
+  },
+  "testimonialMAnusha": {
+    "url": "https://picsum.photos/seed/M. Anusha/40/40",
+    "dataAiHint": "person face"
+  },
+  "testimonialLAkhil": {
+    "url": "https://picsum.photos/seed/L. Akhil/40/40",
+    "dataAiHint": "person face"
+  },
+  "testimonialSDivya": {
+    "url": "https://picsum.photos/seed/S. Divya/40/40",
+    "dataAiHint": "person face"
+  },
+  "userRajesh": {
+    "url": "https://picsum.photos/seed/Rajesh%20Kumar/100/100",
+    "dataAiHint": "person face"
+  },
+  "userVikram": {
+    "url": "https://picsum.photos/seed/Vikram%20Reddy/100/100",
+    "dataAiHint": "person face"
+  },
+  "userAkhil": {
+    "url": "https://picsum.photos/seed/L%20Akhil/100/100",
+    "dataAiHint": "person face"
+  },
+  "userPriya": {
+    "url": "https://picsum.photos/seed/Priya%20Sharma/100/100",
+    "dataAiHint": "person face"
+  },
+  "userDivya": {
+    "url": "https://picsum.photos/seed/S%20Divya/100/100",
+    "dataAiHint": "person face"
+  },
+  "userSaiSathwik": {
+    "url": "https://picsum.photos/seed/K%20Sai%20Sathwik/40/40",
+    "dataAiHint": "person face"
+  },
+  "userAnusha": {
+    "url": "https://picsum.photos/seed/M%20Anusha/40/40",
+    "dataAiHint": "person face"
+  },
+  "userDrNair": {
+    "url": "https://picsum.photos/seed/Dr.%20Nair/32/32",
+    "dataAiHint": "person face"
+  },
+  "userAmitPatel": {
+    "url": "https://picsum.photos/seed/Amit%20Patel/40/40",
+    "dataAiHint": "person face"
+  },
+  "userAnjaliSingh": {
+    "url": "https://picsum.photos/seed/Anjali%20Singh/32/32",
+    "dataAiHint": "person face"
+  },
+  "jamiProfile": {
+    "url": "https://images.unsplash.com/photo-1721295995388-75e1e1273919?q=80&w=800",
+    "dataAiHint": "profile picture"
+  }
+}

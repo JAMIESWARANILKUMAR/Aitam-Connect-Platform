@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "669532897119",
+    "firebase_url": "https://aitam-connect-aylam-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "aitam-connect-aylam",
+    "storage_bucket": "aitam-connect-aylam.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669532897119:android:4e9d9abee4a676fe6c00ea",
+        "android_client_info": {
+          "package_name": "Aitam.Connect.v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANyM6IzTqSSRnIULWpAoxmklUPge7NWz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
