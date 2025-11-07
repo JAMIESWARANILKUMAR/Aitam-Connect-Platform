@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { Users } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -39,9 +39,10 @@ export default function AlumniSection() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {featuredAlumni.map((alumnus) => (
-            <Link key={alumnus.id} href={`/dashboard/alumni/${alumnus.id}`} className="block transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 rounded-lg">
-                <Card className="flex h-full flex-col items-center justify-center p-6 text-center border bg-card/80 backdrop-blur-sm">
-                    <Avatar className="h-24 w-24 mb-4">
+            <Link key={alumnus.id} href={`/dashboard/alumni/${alumnus.id}`} className="block group">
+                <div className="relative flex h-full flex-col items-center justify-center p-6 text-center rounded-lg transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-2 group-hover:scale-105 group-hover:ring-4 group-hover:ring-primary/50 overflow-hidden">
+                    <div className="absolute inset-0 bg-card/30 backdrop-blur-lg -z-10"></div>
+                    <Avatar className="h-24 w-24 mb-4 border-2 border-white/50">
                     <AvatarImage src={alumnus.profileImageUrl} data-ai-hint="person face" />
                     <AvatarFallback style={{ backgroundColor: nameToHslColor(alumnus.name) }}>
                         {getInitials(alumnus.name)}
@@ -56,7 +57,7 @@ export default function AlumniSection() {
                     <Button variant="link" size="sm" className="mt-4 text-primary">
                         View Profile
                     </Button>
-              </Card>
+              </div>
             </Link>
           ))}
         </div>
