@@ -10,6 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useFirebase } from "@/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 const registerSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -47,17 +50,53 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export function RegisterForm() {
   const router = useRouter();
   const { toast } = useToast();
-  const { register, handleSubmit, control, watch, formState: { errors } } = useForm<RegisterFormValues>({
+  const { auth, firestore } = useFirebase();
+  const { register, handleSubmit, control, watch, formState: { errors, isSubmitting } } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
   });
   
   const role = watch("role");
 
   const handleRegister = async (data: RegisterFormValues) => {
+     if (!auth || !firestore) {
+      toast({
+        title: "Error",
+        description: "Firebase is not configured correctly. Please try again later.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
-      // For now, we'll just log the data and navigate.
-      // Firebase account creation logic has been temporarily removed to fix hydration issues.
-      console.log(data);
+      const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const user = userCredential.user;
+      const fullName = `${data.firstName} ${data.lastName}`;
+      
+      await updateProfile(user, {
+          displayName: fullName,
+          // photoURL logic would go here if we were handling file uploads
+      });
+
+      // Save user profile to Firestore
+      const userProfile = {
+        name: fullName,
+        email: data.email,
+        designation: data.role.charAt(0).toUpperCase() + data.role.slice(1),
+        totalRespondedQuestions: 0,
+        ...(data.role === 'student' && {
+          branch: data.branch,
+          yearOfStudy: data.yearOfStudy,
+          rollNumber: data.rollNumber,
+        }),
+        ...(data.role === 'alumni' && {
+          branch: data.branch, // Alumni can also have a branch
+          passOutYear: data.passOutYear,
+          workingStatus: data.workingStatus,
+        }),
+      };
+
+      await setDoc(doc(firestore, "users", user.uid), userProfile);
+
       toast({
         title: "Success",
         description: "Your account has been created successfully.",
@@ -131,33 +170,34 @@ export function RegisterForm() {
             />
              {errors.role && <p className="text-destructive text-xs">{errors.role.message}</p>}
         </div>
+        
+        <div className="grid gap-2">
+            <Label htmlFor="branch">Branch</Label>
+            <Controller
+                name="branch"
+                control={control}
+                render={({ field }) => (
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <SelectTrigger><SelectValue placeholder="Select your branch" /></SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="cse">Computer Science & Engineering</SelectItem>
+                            <SelectItem value="cse_ai_ml">CSE(Artificial Intelligence and Machine Learning)</SelectItem>
+                            <SelectItem value="cse_ds">CSE(Data Science)</SelectItem>
+                            <SelectItem value="cse_cs">CSE(Cyber Security)</SelectItem>
+                            <SelectItem value="it">Information Technology</SelectItem>
+                            <SelectItem value="ece">Electronics & Communication Engineering</SelectItem>
+                            <SelectItem value="eee">Electrical & Electronics Engineering</SelectItem>
+                            <SelectItem value="mech">Mechanical Engineering</SelectItem>
+                            <SelectItem value="civil">Civil Engineering</SelectItem>
+                        </SelectContent>
+                    </Select>
+                )}
+            />
+            {errors.branch && <p className="text-destructive text-xs">{errors.branch.message}</p>}
+        </div>
 
         {role === 'student' && (
             <>
-                <div className="grid gap-2">
-                    <Label htmlFor="branch">Branch</Label>
-                    <Controller
-                        name="branch"
-                        control={control}
-                        render={({ field }) => (
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <SelectTrigger><SelectValue placeholder="Select your branch" /></SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="cse">Computer Science & Engineering</SelectItem>
-                                    <SelectItem value="cse_ai_ml">CSE(Artificial Intelligence and Machine Learning)</SelectItem>
-                                    <SelectItem value="cse_ds">CSE(Data Science)</SelectItem>
-                                    <SelectItem value="cse_cs">CSE(Cyber Security)</SelectItem>
-                                    <SelectItem value="it">Information Technology</SelectItem>
-                                    <SelectItem value="ece">Electronics & Communication Engineering</SelectItem>
-                                    <SelectItem value="eee">Electrical & Electronics Engineering</SelectItem>
-                                    <SelectItem value="mech">Mechanical Engineering</SelectItem>
-                                    <SelectItem value="civil">Civil Engineering</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        )}
-                    />
-                    {errors.branch && <p className="text-destructive text-xs">{errors.branch.message}</p>}
-                </div>
                  <div className="grid gap-2">
                     <Label htmlFor="year-of-study">Year of Study</Label>
                     <Controller
@@ -210,8 +250,8 @@ export function RegisterForm() {
                 </div>
             </>
         )}
-        <Button type="submit" className="w-full">
-          Create an account
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? 'Creating Account...' : 'Create an account'}
         </Button>
       </div>
     </form>

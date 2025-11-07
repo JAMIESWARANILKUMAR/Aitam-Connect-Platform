@@ -1,3 +1,4 @@
+
 import type { User } from './users';
 import type { Timestamp } from 'firebase/firestore';
 
@@ -12,3 +13,5 @@ export type Question = {
     answerCount: number;
     consolidatedAnswer?: string; // Markdown format
 };
+
+    
