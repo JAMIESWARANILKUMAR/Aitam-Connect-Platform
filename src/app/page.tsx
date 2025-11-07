@@ -16,6 +16,7 @@ const NewsSection = dynamic(() => import('@/components/landing/news-section'));
 const AlumniSection = dynamic(() => import('@/components/landing/alumni-section'));
 const LeadershipSection = dynamic(() => import('@/components/landing/leadership-section'));
 const DeansSection = dynamic(() => import('@/components/landing/deans-section'));
+const StrengthSection = dynamic(() => import('@/components/landing/strength-section'));
 const AchievementsSection = dynamic(() => import('@/components/landing/achievements-section'));
 const PlacementsSection = dynamic(() => import('@/components/landing/placements-section'));
 const AppFooter = dynamic(() => import('@/components/layout/app-footer').then(mod => mod.AppFooter));
@@ -120,6 +121,7 @@ export default function LandingPage() {
         <hr className="my-0 border-border" />
         <DeansSection />
         <hr className="my-0 border-border" />
+        <StrengthSection />
         <AchievementsSection />
         <hr className="my-0 border-border" />
         <PlacementsSection />
