@@ -4,12 +4,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import placeholderImages from '@/lib/placeholder-images.json';
+import { motion } from 'framer-motion';
 
-const backgroundImage = 'https://adityatekkali.edu.in/assets/images/bg/bg-image-17.webp';
+const backgroundImage = placeholderImages.hero.url;
 
 export default function HeroSection() {
   return (
-    <section id="about" className="w-full relative py-12 md:py-24 lg:py-32 overflow-hidden">
+    <section id="about" className="w-full relative py-24 md:py-32 lg:py-40 overflow-hidden">
       <div className="absolute inset-0 w-full h-full -z-10">
         <Image
           src={backgroundImage}
@@ -18,26 +20,47 @@ export default function HeroSection() {
           className="object-cover"
           priority
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent"></div>
       </div>
-      <div className="absolute inset-0 bg-black/50 -z-10"></div>
+      
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="flex flex-col justify-center space-y-4 text-white p-6 rounded-lg">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="flex flex-col justify-center space-y-4 text-white bg-black/30 backdrop-blur-sm p-8 rounded-xl border border-white/20"
+          >
+            <div className="space-y-4">
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white shadow-lg"
+              >
                 Welcome to AITAM Connect
-              </h1>
-              <p className="max-w-[600px] text-gray-200 md:text-xl">
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+                className="max-w-[600px] text-gray-200 md:text-xl"
+              >
                 The ultimate platform for students, alumni, and faculty to
                 connect, share knowledge, and grow together.
-              </p>
+              </motion.p>
             </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button asChild size="lg">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
+              className="flex flex-col gap-2 min-[400px]:flex-row pt-4"
+            >
+              <Button asChild size="lg" className="animate-pulse-glow">
                 <Link href="/login">Get Started</Link>
               </Button>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
