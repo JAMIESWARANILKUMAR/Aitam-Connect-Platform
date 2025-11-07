@@ -1,11 +1,7 @@
 
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { Youtube } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { relatedVideos } from "@/lib/database/videos";
 
 export default function RelatedVideos() {
     return (
@@ -15,29 +11,18 @@ export default function RelatedVideos() {
               <Youtube className="w-10 h-10 text-primary" />
               <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl">More from AITAM Official</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-              {relatedVideos.map((video) => (
-                <Link key={video.id} href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener noreferrer" className="group block">
-                  <Card className="overflow-hidden h-full transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-2">
-                      <div className="relative">
-                        <Image 
-                            src={video.thumbnail.url} 
-                            alt={video.title} 
-                            width={600} 
-                            height={400} 
-                            className="w-full h-48 object-cover"
-                            data-ai-hint={video.thumbnail.dataAiHint}
-                        />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors flex items-center justify-center">
-                            <Youtube className="w-12 h-12 text-white/80 group-hover:text-white group-hover:scale-110 transition-transform" />
-                        </div>
-                      </div>
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold line-clamp-2">{video.title}</h3>
-                      </CardContent>
-                  </Card>
-                </Link>
-              ))}
+             <div className="relative mt-8" style={{ paddingTop: '56.25%' /* 16:9 Aspect Ratio */ }}>
+                <iframe 
+                    className="absolute top-0 left-0 w-full h-full rounded-xl shadow-2xl"
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/uUdYN2QsrEU?si=_thiz2Z37x3VjHtv" 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerPolicy="strict-origin-when-cross-origin" 
+                    allowFullScreen
+                ></iframe>
             </div>
           </div>
         </section>
