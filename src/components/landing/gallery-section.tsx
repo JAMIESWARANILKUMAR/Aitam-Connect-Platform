@@ -7,7 +7,7 @@ import placeholderImages from "@/lib/placeholder-images.json";
 
 export default function GallerySection() {
     return (
-        <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-colorful-gradient">
+        <section id="gallery" className="w-full py-12 md:py-24 lg:py-32 bg-background bg-grid-pattern">
           <div className="container px-4 md:px-6">
             <div className="flex justify-center items-center gap-4 mb-8">
               <ImageIcon className="w-10 h-10 text-primary" />
