@@ -16,7 +16,7 @@ export default function OfficialVideoSection() {
             className="absolute top-0 left-0 w-full h-full rounded-xl shadow-2xl"
             width="560" 
             height="315" 
-            src="https://www.youtube-nocookie.com/embed/RXKIN6eHjBc?si=lQ8ew8ZLCCcCvSL_&amp;controls=0&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=RXKIN6eHjBc" 
+            src="https://www.youtube-nocookie.com/embed/RXKIN6eHjBc?si=lQ8ew8ZLCCcCvSL_&amp;controls=0&amp;autoplay=1&amp;loop=1&amp;rel=0&amp;playlist=RXKIN6eHjBc" 
             title="YouTube video player" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
