@@ -21,15 +21,15 @@ const companies = [
 ];
 
 const MarqueeRow = ({ logos, reverse = false }: { logos: string[]; reverse?: boolean }) => (
-  <div className="flex w-max animate-marquee items-center gap-16" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+  <div className="flex w-max animate-marquee items-center gap-24" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
     {logos.map((domain, index) => (
       <Image
         key={`${domain}-${index}`}
         src={`https://logo.clearbit.com/${domain}`}
         alt={`${domain} logo`}
-        width={140}
+        width={180}
         height={60}
-        className="object-contain aspect-[3/1] w-36"
+        className="object-contain aspect-[3/1] w-48"
         unoptimized
       />
     ))}
