@@ -12,7 +12,6 @@ import { ScrollFadeIn } from "@/components/landing/scroll-fade-in";
 // Dynamically import heavy components
 const HeroSection = dynamic(() => import('@/components/landing/hero-section'));
 const GallerySection = dynamic(() => import('@/components/landing/gallery-section'));
-const OfficialVideoSection = dynamic(() => import('@/components/landing/official-video-section'));
 const RelatedVideos = dynamic(() => import('@/components/landing/related-videos'));
 const FeaturedQuestions = dynamic(() => import('@/components/landing/featured-questions'));
 const NewsSection = dynamic(() => import('@/components/landing/news-section'));
@@ -114,10 +113,6 @@ export default function LandingPage() {
         <hr className="my-0 border-border" />
         <ScrollFadeIn>
             <GallerySection />
-        </ScrollFadeIn>
-        <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <OfficialVideoSection />
         </ScrollFadeIn>
         <hr className="my-0 border-border" />
         <ScrollFadeIn>
