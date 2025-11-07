@@ -75,7 +75,7 @@ export default function RelatedVideos() {
             <iframe
               className="absolute top-0 left-0 w-full h-full rounded-xl shadow-2xl"
               src="https://www.youtube.com/embed/uUdYN2QsrEU?si=_thiz2Z37x3VjHtv"
-              title="YouTube video player"
+              title="Avishkaar 3.0 - AITAM's Innovation Marathon"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"

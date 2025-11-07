@@ -2,24 +2,23 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function HeroSection() {
-  const videoId = 'RXKIN6eHjBc';
-  const videoSrc = `https://www.youtube-nocookie.com/embed/${videoId}?si=lQ8ew8ZLCCcCvSL_&controls=0&autoplay=1&loop=1&rel=0&playlist=${videoId}&mute=1&iv_load_policy=3&modestbranding=1`;
 
   return (
     <section id="about" className="w-full relative py-32 md:py-48 lg:py-64 overflow-hidden">
       <div className="absolute inset-0 w-full h-full -z-10">
-        <iframe
-          className="absolute top-1/2 left-1/2 w-full h-full min-w-[177.77vh] min-h-[56.25vw] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-          src={videoSrc}
-          title="YouTube video player background"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen={false}
-        ></iframe>
+        <Image
+          src={placeholderImages.hero.url}
+          alt="A panoramic view of the AITAM college campus"
+          fill
+          priority
+          className="object-cover object-center"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-black/20"></div>
       </div>
       

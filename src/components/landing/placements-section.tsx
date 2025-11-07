@@ -35,7 +35,7 @@ const MarqueeRow = ({ logos, reverse = false }: { logos: string[]; reverse?: boo
       <Image
         key={`${domain}-${index}`}
         src={`https://logo.clearbit.com/${domain}`}
-        alt={`${domain} logo`}
+        alt={`${domain.split('.')[0]} logo`}
         width={180}
         height={60}
         className="object-contain aspect-[3/1] w-48"
