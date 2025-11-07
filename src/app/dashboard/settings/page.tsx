@@ -19,6 +19,7 @@ import { Loader2, User, KeyRound, ShieldCheck } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
+import { useEffect } from 'react';
 
 const profileFormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -36,15 +37,21 @@ export default function SettingsPage() {
 
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
-    values: {
-        name: userProfile?.name || '',
-        workingStatus: userProfile?.workingStatus || '',
+    defaultValues: {
+        name: '',
+        workingStatus: '',
     },
-    resetOptions: {
-        keepValues: true,
-    }
   });
   
+  useEffect(() => {
+    if (userProfile) {
+      form.reset({
+        name: userProfile.name || '',
+        workingStatus: userProfile.workingStatus || '',
+      });
+    }
+  }, [userProfile, form]);
+
   const { formState: { isSubmitting } } = form;
 
   const getInitials = (name?: string | null) => {
@@ -74,7 +81,9 @@ export default function SettingsPage() {
         await updateDoc(userRef, updateData);
 
         // Update Firebase Auth profile
-        await updateProfile(auth.currentUser, { displayName: values.name });
+        if (auth.currentUser.displayName !== values.name) {
+            await updateProfile(auth.currentUser, { displayName: values.name });
+        }
 
         toast({ title: "Profile Updated", description: "Your information has been saved successfully." });
         
@@ -226,5 +235,4 @@ export default function SettingsPage() {
       </Form>
     </div>
   );
-
-    
+}
