@@ -50,9 +50,6 @@ export default function LandingPage() {
                     className="object-contain"
                     priority
                 />
-                 <span className="font-bold text-xl text-primary group-data-[collapsible=icon]:hidden">
-                  AITAM Connect
-                </span>
             </Link>
         </div>
 
