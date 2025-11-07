@@ -13,6 +13,7 @@ import { ScrollFadeIn } from "@/components/landing/scroll-fade-in";
 const HeroSection = dynamic(() => import('@/components/landing/hero-section'));
 const GallerySection = dynamic(() => import('@/components/landing/gallery-section'));
 const OfficialVideoSection = dynamic(() => import('@/components/landing/official-video-section'));
+const RelatedVideos = dynamic(() => import('@/components/landing/related-videos'));
 const FeaturedQuestions = dynamic(() => import('@/components/landing/featured-questions'));
 const NewsSection = dynamic(() => import('@/components/landing/news-section'));
 const AlumniSection = dynamic(() => import('@/components/landing/alumni-section'));
@@ -119,6 +120,10 @@ export default function LandingPage() {
         <hr className="my-0 border-border" />
         <ScrollFadeIn>
             <OfficialVideoSection />
+        </ScrollFadeIn>
+        <hr className="my-0 border-border" />
+        <ScrollFadeIn>
+            <RelatedVideos />
         </ScrollFadeIn>
         <hr className="my-0 border-border" />
         <ScrollFadeIn>

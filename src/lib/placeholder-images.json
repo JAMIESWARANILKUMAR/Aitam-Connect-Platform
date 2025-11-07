@@ -138,5 +138,17 @@
   "jamiProfile": {
     "url": "https://images.unsplash.com/photo-1721295995388-75e1e1273919?q=80&w=800",
     "dataAiHint": "profile picture"
+  },
+  "videoNaac": {
+    "url": "https://picsum.photos/seed/video-naac/600/400",
+    "dataAiHint": "celebration event"
+  },
+  "videoIgnite": {
+    "url": "https://picsum.photos/seed/video-ignite/600/400",
+    "dataAiHint": "tech symposium"
+  },
+  "videoDrone": {
+    "url": "https://picsum.photos/seed/video-drone/600/400",
+    "dataAiHint": "drone view"
   }
 }
