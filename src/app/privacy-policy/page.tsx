@@ -81,7 +81,7 @@ const policySections = [
         icon: <Mail className="h-5 w-5 text-primary" />,
         content: (
             <p>
-                If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@aitamconnectadityatekkali.in" className="text-primary underline">support@aitamconnectadityatekkali.in</a>.
+                If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@aitamconnect.adityatekkali.in" className="text-primary underline">support@aitamconnect.adityatekkali.in</a>.
             </p>
         )
     }

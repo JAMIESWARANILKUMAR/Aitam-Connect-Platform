@@ -95,9 +95,9 @@ export function AppFooter() {
             </div>
             <div>
               <p className="font-semibold">For Support &amp; Queries:</p>
-              <a href="mailto:support@aitamconnectadityatekkali.in" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
+              <a href="mailto:support@aitamconnect.adityatekkali.in" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
                 <Mail className="w-4 h-4" />
-                support@aitamconnectadityatekkali.in
+                support@aitamconnect.adityatekkali.in
               </a>
             </div>
             <div>

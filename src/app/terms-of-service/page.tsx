@@ -94,8 +94,8 @@ const termsSections = [
     content: (
       <p>
         If you have any questions about these Terms, please contact us at{' '}
-        <a href="mailto:support@aitamconnectadityatekkali.in" className="text-primary underline">
-          support@aitamconnectadityatekkali.in
+        <a href="mailto:support@aitamconnect.adityatekkali.in" className="text-primary underline">
+          support@aitamconnect.adityatekkali.in
         </a>.
       </p>
     ),
