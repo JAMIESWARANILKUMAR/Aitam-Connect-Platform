@@ -157,6 +157,7 @@ export default function LandingPage() {
         <ScrollFadeIn>
             <PlacementsSection />
         </ScrollFadeIn>
+        <hr className="my-0 border-border" />
         <ScrollFadeIn>
             <FaqSection />
         </ScrollFadeIn>
