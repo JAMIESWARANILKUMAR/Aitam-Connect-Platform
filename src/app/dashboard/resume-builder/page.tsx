@@ -10,9 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Sparkles, AlertCircle, FileCheck, Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye } from 'lucide-react';
-import { analyzeResume, type ResumeAnalysisOutput } from '@/ai/flows/resume-checker-flow';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye } from 'lucide-react';
 import { ResumePreview } from '@/components/dashboard/resume-preview';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -45,9 +43,6 @@ export type ResumeColor = ColorType | string;
 
 
 export default function ResumeBuilderPage() {
-  const [analysis, setAnalysis] = useState<ResumeAnalysisOutput | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [template, setTemplate] = useState<TemplateType>('classic');
   const [color, setColor] = useState<ResumeColor>('blue');
   const { toast } = useToast();
@@ -75,28 +70,6 @@ export default function ResumeBuilderPage() {
   });
   
   const resumeData = form.watch();
-
-  const handleAnalyze = async () => {
-    const values = form.getValues();
-    const resumeText = Object.entries(values)
-      .filter(([key, value]) => value)
-      .map(([key, value]) => `${key.replace(/([A-Z])/g, ' $1').toUpperCase()}:\n${value}`)
-      .join('\n\n');
-      
-    setLoading(true);
-    setError(null);
-    setAnalysis(null);
-
-    try {
-      const result = await analyzeResume({ resumeText });
-      setAnalysis(result);
-    } catch (e) {
-      console.error(e);
-      setError('An error occurred during analysis. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleDownloadPdf = () => {
     const resumeElement = resumePreviewRef.current;
@@ -404,42 +377,6 @@ export default function ResumeBuilderPage() {
                     </RadioGroup>
               </div>
               </CardContent>
-        </Card>
-
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2"><FileCheck className="h-6 w-6 text-primary" /> ATS Resume Analyzer</CardTitle>
-                <CardDescription>Get AI-powered feedback on the resume you've built.</CardDescription>
-            </CardHeader>
-            <CardFooter className="flex-col items-start gap-4">
-                <Button onClick={handleAnalyze} disabled={loading}>
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                    Analyze Resume
-                </Button>
-                {loading && <p className="flex items-center gap-2 text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin" /> Analyzing your resume...</p>}
-                {error && <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Analysis Error</AlertTitle>
-                    <AlertDescription>{error}</AlertDescription>
-                    </Alert>
-                }
-                {analysis && (
-                    <Alert className="border-primary/20 bg-gradient-to-tr from-blue-50 via-cyan-50 to-sky-100 dark:from-blue-950/80 dark:via-cyan-950/80 dark:to-sky-950/80">
-                    <Sparkles className="h-4 w-4 text-primary" />
-                    <AlertTitle className="font-bold text-primary">Analysis Complete</AlertTitle>
-                    <AlertDescription className="prose prose-sm max-w-full dark:prose-invert">
-                        <h4>Overall Score: {analysis.overallScore}/100</h4>
-                        <p>{analysis.overallFeedback}</p>
-                        <h5>Suggestions for Improvement:</h5>
-                        <ul>
-                            {analysis.suggestions.map((suggestion, i) => (
-                                <li key={i}>{suggestion}</li>
-                            ))}
-                        </ul>
-                    </AlertDescription>
-                    </Alert>
-                )}
-            </CardFooter>
         </Card>
 
         <Card>
