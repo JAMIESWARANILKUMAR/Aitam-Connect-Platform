@@ -41,6 +41,15 @@ export default function AlumniPage() {
     return name.substring(0, 2).toUpperCase();
   };
 
+  const nameToHslColor = (name: string) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const h = hash % 360;
+    return `hsl(${h}, 70%, 80%)`;
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <Card>
@@ -56,9 +65,10 @@ export default function AlumniPage() {
               />
             </div>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
           {loading && (
             <>
+              <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
@@ -78,7 +88,9 @@ export default function AlumniPage() {
               <Card className="flex h-full flex-col items-center justify-center p-6 text-center border-0 shadow-none">
                 <Avatar className="h-24 w-24 mb-4">
                   <AvatarImage src={alum.profileImageUrl} data-ai-hint="person face" />
-                  <AvatarFallback>{getInitials(alum.name)}</AvatarFallback>
+                  <AvatarFallback style={{ backgroundColor: nameToHslColor(alum.name) }}>
+                    {getInitials(alum.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <h3 className="text-lg font-bold">{alum.name}</h3>
                 <p className="text-sm text-muted-foreground">{alum.workingStatus || alum.designation}</p>
@@ -94,7 +106,7 @@ export default function AlumniPage() {
           ))}
           
            {!loading && !error && (!filteredAlumni || filteredAlumni.length === 0) && (
-            <div className="md:col-span-2 lg:col-span-4 text-center py-12">
+            <div className="md:col-span-2 lg:col-span-5 text-center py-12">
                 <UserX className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">No Alumni Found</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
