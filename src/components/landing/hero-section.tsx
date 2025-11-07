@@ -17,7 +17,7 @@ export default function HeroSection() {
           src={backgroundImage}
           alt="AITAM Campus background"
           fill
-          className="object-cover"
+          className="object-cover object-center"
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent"></div>
