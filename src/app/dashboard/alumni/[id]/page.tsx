@@ -20,7 +20,8 @@ import {
   Mail,
   UserX,
   Construction,
-  ChevronLeft
+  ChevronLeft,
+  Rss
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -128,6 +129,9 @@ export default function AlumniProfilePage({ params }: { params: { id: string } }
                     <a href={`mailto:${alumni.email}`}><Mail className="mr-2 h-4 w-4"/> Email</a>
                 </Button>
             )}
+             <Button variant="outline" size="sm">
+                <Rss className="mr-2 h-4 w-4"/> Follow
+             </Button>
             {alumni.linkedin && (
                 <Button asChild size="sm">
                     <a href={alumni.linkedin} target="_blank" rel="noopener noreferrer"><Linkedin className="mr-2 h-4 w-4"/> LinkedIn</a>
@@ -164,4 +168,3 @@ export default function AlumniProfilePage({ params }: { params: { id: string } }
     </div>
   );
 }
-
