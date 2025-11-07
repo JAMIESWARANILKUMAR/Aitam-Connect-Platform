@@ -11,7 +11,6 @@ const companies = [
   'wipro.com',
   'smartbridge.com',
   'infosys.com',
-  'axisbank.com',
   'ril.com',
   'pennanttech.com',
   'peopletech.com',
