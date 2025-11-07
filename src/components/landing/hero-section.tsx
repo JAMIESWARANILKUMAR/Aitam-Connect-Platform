@@ -10,7 +10,7 @@ export default function HeroSection() {
   const videoSrc = `https://www.youtube-nocookie.com/embed/${videoId}?si=lQ8ew8ZLCCcCvSL_&controls=0&autoplay=1&loop=1&rel=0&playlist=${videoId}&mute=1&iv_load_policy=3&modestbranding=1`;
 
   return (
-    <section id="about" className="w-full relative py-24 md:py-32 lg:py-40 overflow-hidden">
+    <section id="about" className="w-full relative py-32 md:py-48 lg:py-56 overflow-hidden">
       <div className="absolute inset-0 w-full h-full -z-10">
         <iframe
           className="absolute top-1/2 left-1/2 w-full h-full min-w-[177.77vh] min-h-[56.25vw] -translate-x-1/2 -translate-y-1/2 pointer-events-none"
