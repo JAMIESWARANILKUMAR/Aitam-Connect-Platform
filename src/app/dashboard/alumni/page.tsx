@@ -47,7 +47,7 @@ export default function AlumniPage() {
             const prevCursor = pageHistory[page-1];
             alumniQuery = prevCursor ? query(baseQuery, startAfter(prevCursor), limit(PROFILES_PER_PAGE)) : query(baseQuery, limit(PROFILES_PER_PAGE));
         } else {
-             alumniQuery = query(baseQuery, limit(PROFILES_PER-PAGE));
+             alumniQuery = query(baseQuery, limit(PROFILES_PER_PAGE));
         }
         
         const documentSnapshots = await getDocs(alumniQuery);
