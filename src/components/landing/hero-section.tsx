@@ -4,13 +4,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
 import placeholderImages from '@/lib/placeholder-images.json';
 
 export default function HeroSection() {
 
   return (
-    <section id="about" className="w-full relative py-32 md:py-48 lg:py-64 overflow-hidden">
+    <section id="about" className="w-full relative py-20 md:py-32 lg:py-48">
       <div className="absolute inset-0 w-full h-full -z-10">
         <Image
           src={placeholderImages.hero.url}
@@ -23,37 +22,22 @@ export default function HeroSection() {
       </div>
       
       <div className="container px-4 md:px-6">
-        <div className="grid gap-6 lg:grid-cols-1 lg:gap-12 items-center">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="flex flex-col justify-center space-y-4 text-center items-center"
-          >
+        <div className="flex flex-col justify-center items-center space-y-4 text-center">
             <div className="space-y-4">
-              <motion.h1 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-                className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-7xl/none text-white [text-shadow:0_4px_8px_rgba(0,0,0,0.4)]"
+              <h1 
+                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white [text-shadow:0_4px_8px_rgba(0,0,0,0.4)]"
               >
                 Welcome to AITAM Connect
-              </motion.h1>
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-                className="max-w-[700px] text-gray-200 md:text-xl lg:text-2xl [text-shadow:0_2px_4px_rgba(0,0,0,0.5)]"
+              </h1>
+              <p 
+                className="max-w-[700px] text-gray-200 md:text-xl lg:text-lg [text-shadow:0_2px_4px_rgba(0,0,0,0.5)]"
               >
                 The ultimate platform for students, alumni, and faculty to
                 connect, share knowledge, and grow together.
-              </motion.p>
+              </p>
             </div>
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-              className="flex flex-col gap-2 min-[400px]:flex-row pt-4"
+            <div 
+              className="flex flex-col gap-2 min-[400px]:flex-row justify-center pt-4"
             >
               <Button asChild size="lg" className="animate-pulse-glow">
                 <Link href="/login">Get Started</Link>
@@ -61,8 +45,7 @@ export default function HeroSection() {
               <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 transition-transform duration-300 ease-in-out hover:scale-105">
                 <Link href="https://www.easytourz.com/BT-EmabedTour/all/7f788f014369a2c3" target="_blank" rel="noopener noreferrer">Take me College Tour</Link>
               </Button>
-            </motion.div>
-          </motion.div>
+            </div>
         </div>
       </div>
     </section>

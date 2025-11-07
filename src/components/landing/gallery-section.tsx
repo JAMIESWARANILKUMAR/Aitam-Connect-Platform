@@ -14,9 +14,9 @@ export default function GallerySection() {
               <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl">Glimpses of Our Campus</h2>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-              <Image src={placeholderImages.galleryCampus.url} alt="Campus Image 1" width={600} height={400} className="rounded-xl object-cover transform transition-all hover:-translate-y-2 duration-300" data-ai-hint={placeholderImages.galleryCampus.dataAiHint} />
-              <Image src={placeholderImages.galleryLibrary.url} alt="Campus Image 2" width={600} height={400} className="rounded-xl object-cover transform transition-all hover:-translate-y-2 duration-300" data-ai-hint={placeholderImages.galleryLibrary.dataAiHint} />
-              <Image src={placeholderImages.galleryEvent.url} alt="Campus Image 3" width={600} height={400} className="rounded-xl object-cover transform transition-all hover:-translate-y-2 duration-300" data-ai-hint={placeholderImages.galleryEvent.dataAiHint} />
+              <Image src={placeholderImages.galleryCampus.url} alt="Campus Image 1" width={600} height={400} className="rounded-xl object-cover transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-ai-hint={placeholderImages.galleryCampus.dataAiHint} />
+              <Image src={placeholderImages.galleryLibrary.url} alt="Campus Image 2" width={600} height={400} className="rounded-xl object-cover transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-ai-hint={placeholderImages.galleryLibrary.dataAiHint} />
+              <Image src={placeholderImages.galleryEvent.url} alt="Campus Image 3" width={600} height={400} className="rounded-xl object-cover transition-all duration-300 hover:-translate-y-2 hover:shadow-xl" data-ai-hint={placeholderImages.galleryEvent.dataAiHint} />
             </div>
           </div>
         </section>

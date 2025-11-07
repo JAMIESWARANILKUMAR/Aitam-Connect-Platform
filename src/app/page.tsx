@@ -5,24 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button";
-import { Info, Newspaper, Users, Calendar, ImageIcon, Handshake, Smartphone, Menu, ArrowRight } from "lucide-react";
+import { Info, Newspaper, Users, Calendar, ImageIcon, Handshake, Smartphone, Menu } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { ScrollFadeIn } from "@/components/landing/scroll-fade-in";
-
-// Dynamically import heavy components
-const HeroSection = dynamic(() => import('@/components/landing/hero-section'));
-const GallerySection = dynamic(() => import('@/components/landing/gallery-section'));
-const RelatedVideos = dynamic(() => import('@/components/landing/related-videos'));
-const FeaturedQuestions = dynamic(() => import('@/components/landing/featured-questions'));
-const NewsSection = dynamic(() => import('@/components/landing/news-section'));
-const AlumniSection = dynamic(() => import('@/components/landing/alumni-section'));
-const LeadershipSection = dynamic(() => import('@/components/landing/leadership-section'));
-const DeansSection = dynamic(() => import('@/components/landing/deans-section'));
-const StrengthSection = dynamic(() => import('@/components/landing/strength-section'));
-const AchievementsSection = dynamic(() => import('@/components/landing/achievements-section'));
-const PlacementsSection = dynamic(() => import('@/components/landing/placements-section'));
-const FaqSection = dynamic(() => import('@/components/landing/faq-section'));
-const AppFooter = dynamic(() => import('@/components/layout/app-footer').then(mod => mod.AppFooter));
+import HeroSection from '@/components/landing/hero-section';
+import GallerySection from '@/components/landing/gallery-section';
+import RelatedVideos from '@/components/landing/related-videos';
+import FeaturedQuestions from '@/components/landing/featured-questions';
+import NewsSection from '@/components/landing/news-section';
+import AlumniSection from '@/components/landing/alumni-section';
+import LeadershipSection from '@/components/landing/leadership-section';
+import DeansSection from '@/components/landing/deans-section';
+import StrengthSection from '@/components/landing/strength-section';
+import AchievementsSection from '@/components/landing/achievements-section';
+import PlacementsSection from '@/components/landing/placements-section';
+import FaqSection from '@/components/landing/faq-section';
+import { AppFooter } from '@/components/layout/app-footer';
 
 
 export default function LandingPage() {
@@ -111,48 +108,26 @@ export default function LandingPage() {
       <main className="flex-1">
         <HeroSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <GallerySection />
-        </ScrollFadeIn>
+        <GallerySection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <RelatedVideos />
-        </ScrollFadeIn>
+        <RelatedVideos />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-          <FeaturedQuestions />
-        </ScrollFadeIn>
+        <FeaturedQuestions />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <NewsSection />
-        </ScrollFadeIn>
+        <NewsSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <AlumniSection />
-        </ScrollFadeIn>
+        <AlumniSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <LeadershipSection />
-        </ScrollFadeIn>
+        <LeadershipSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <DeansSection />
-        </ScrollFadeIn>
+        <DeansSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <StrengthSection />
-        </ScrollFadeIn>
-        <ScrollFadeIn>
-            <AchievementsSection />
-        </ScrollFadeIn>
+        <StrengthSection />
+        <AchievementsSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-          <PlacementsSection />
-        </ScrollFadeIn>
+        <PlacementsSection />
         <hr className="my-0 border-border" />
-        <ScrollFadeIn>
-            <FaqSection />
-        </ScrollFadeIn>
+        <FaqSection />
       </main>
       <AppFooter />
     </div>

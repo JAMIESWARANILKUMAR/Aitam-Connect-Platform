@@ -24,7 +24,7 @@ export default function DeansSection() {
             </div>
              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8">
               {deans.map((dean) => (
-                <Card key={dean.name} className="text-center transform transition-all hover:-translate-y-2 duration-300">
+                <Card key={dean.name} className="text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                   <CardContent className="flex flex-col items-center pt-6">
                     <Avatar className="h-24 w-24 mb-4">
                       <AvatarImage src={dean.image} data-ai-hint="person face" />

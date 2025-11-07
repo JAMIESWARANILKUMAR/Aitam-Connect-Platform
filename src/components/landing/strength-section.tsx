@@ -2,7 +2,6 @@
 "use client";
 
 import { Users, GraduationCap, Briefcase, UserCheck, School, UserRoundCheck } from "lucide-react";
-import { motion } from "framer-motion";
 
 const stats = [
     {
@@ -31,11 +30,6 @@ const stats = [
     },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0 },
-};
-
 export default function StrengthSection() {
     return (
         <section id="strength" className="w-full py-12 md:py-24 lg:py-32 bg-background bg-grid-pattern overflow-hidden">
@@ -45,21 +39,16 @@ export default function StrengthSection() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
                     {stats.map((stat, index) => (
-                        <motion.div
+                        <div
                             key={index}
                             className="flex flex-col items-center justify-center p-6 text-center transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 hover:bg-card rounded-lg border"
-                            variants={cardVariants}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
-                            transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
                             <div className="mb-4 rounded-full bg-primary/10 p-4">
                                 {stat.icon}
                             </div>
                             <h3 className={`text-4xl font-bold ${stat.color}`}>{stat.value}</h3>
                             <p className="text-muted-foreground mt-2 uppercase font-semibold">{stat.label}</p>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
             </div>

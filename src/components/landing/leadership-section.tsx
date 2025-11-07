@@ -23,7 +23,7 @@ export default function LeadershipSection() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8">
               {leadership.map((leader) => (
-                <Card key={leader.name} className="text-center transform transition-all hover:-translate-y-2 duration-300">
+                <Card key={leader.name} className="text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                   <CardContent className="flex flex-col items-center pt-6">
                     <Avatar className="h-32 w-32 mb-4">
                       <AvatarImage src={leader.image} data-ai-hint="person face" />

@@ -17,7 +17,7 @@ export default function NewsSection() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {newsItems.map((item, index) => (
-                <Card key={index} className="overflow-hidden transform transition-all hover:-translate-y-2 duration-300">
+                <Card key={index} className="overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                   <Link href={item.link} target="_blank" rel="noopener noreferrer" className="transition-colors">
                     <Image src={item.image.url} alt={item.title} width={600} height={400} className="w-full h-48 object-cover" data-ai-hint={item.image.dataAiHint} />
                     <CardHeader>
