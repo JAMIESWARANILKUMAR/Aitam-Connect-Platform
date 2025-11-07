@@ -43,7 +43,25 @@ const technicalFaqs = [
   },
   {
     question: 'Who can I contact for technical support?',
-    answer: "For general technical issues or questions, please reach out to our support team at support@aitamconnect.adityatekkali.in. For specific complaints, you can contact the administrator: Dr. D. Yugandhar (Professor & Associate Dean @ Alumni, C.G & SAC) at yugandhar.dasari@adityatekkali.edu.in.",
+    answer: (
+      <div className="space-y-4">
+        <div>
+          <p className="font-semibold text-slate-300">For General Support:</p>
+          <p>For general technical issues or questions, please reach out to our support team at <a href="mailto:support@aitamconnect.adityatekkali.in" className="text-primary underline">support@aitamconnect.adityatekkali.in</a>.</p>
+        </div>
+        <div>
+          <p className="font-semibold text-slate-300">For Specific Complaints:</p>
+          <p>For specific complaints, you can contact the administrator directly:</p>
+          <div className="mt-2 pl-4 border-l-2 border-primary">
+            <p className="font-bold">Dr. D. Yugandhar</p>
+            <p className="text-sm">Professor & Associate Dean @ Alumni, C.G & SAC</p>
+            <p className="text-sm">
+              <a href="mailto:yugandhar.dasari@adityatekkali.edu.in" className="text-primary underline">yugandhar.dasari@adityatekkali.edu.in</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
   },
 ];
 
