@@ -3,7 +3,7 @@
 
 import React from 'react';
 import type { ResumeData, TemplateType, ResumeColor } from '@/app/dashboard/resume-builder/page';
-import { Mail, Phone, Linkedin, Briefcase, GraduationCap, Star, Award, Code } from 'lucide-react';
+import { Mail, Phone, Linkedin, Briefcase, GraduationCap, Star, Award, Code, Construction } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ResumePreviewProps {
@@ -90,7 +90,16 @@ const templates = {
 };
 
 const Section: React.FC<{ title: string; icon?: React.ReactNode; className?: string; styles: { title: React.CSSProperties; icon?: React.CSSProperties }; children: React.ReactNode }> = ({ title, icon, className, styles, children }) => {
-    const hasChildren = React.Children.count(children) > 0 && (React.Children.toArray(children)[0] as React.ReactElement)?.props?.children;
+    const hasChildren = React.Children.count(children) > 0 && 
+        React.Children.toArray(children).some(child => {
+            if (React.isValidElement(child)) {
+                // Check for arrays with items, or non-empty strings/elements
+                if (Array.isArray(child.props.children) && child.props.children.length === 0) return false;
+                if (child.props.children === null || child.props.children === undefined) return false;
+                return true;
+            }
+            return false;
+        });
 
     if (!hasChildren) return null;
 
@@ -147,9 +156,9 @@ const TemplateRenderer = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({
     
     const skillsSection = (
       <div className="flex flex-wrap gap-2 mt-2">
-          {data.skills?.split(',').map((skill, index) => (
+          {data.skills?.map((skill, index) => (
               <span key={index} className="text-xs font-medium px-2.5 py-1 rounded-full" style={{backgroundColor: c.muted, color: c.text}}>
-                  {skill.trim()}
+                  {skill.name.trim()}
               </span>
           ))}
       </div>
@@ -161,27 +170,64 @@ const TemplateRenderer = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({
           <p className="whitespace-pre-line">{data.summary}</p>
         </Section>
         <Section title="Work Experience" icon={<Briefcase size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.experience}</p>
+             <div className="space-y-4">
+                {data.experience?.map((exp, i) => (
+                    <div key={i}>
+                        <h3 className="font-bold">{exp.companyName} - <span className="font-medium italic">{exp.role}</span></h3>
+                        <p className="whitespace-pre-line text-sm text-gray-600">{exp.description}</p>
+                    </div>
+                ))}
+            </div>
         </Section>
         <Section title="Internships" icon={<Briefcase size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.internships}</p>
+            <div className="space-y-4">
+                {data.internships?.map((intern, i) => (
+                    <div key={i}>
+                         <h3 className="font-bold">{intern.role} at {intern.companyName} - <span className="font-medium italic">{intern.duration}</span></h3>
+                        <p className="whitespace-pre-line text-sm text-gray-600">{intern.description}</p>
+                    </div>
+                ))}
+            </div>
         </Section>
-        <Section title="Projects" icon={<Code size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.projects}</p>
+        <Section title="Projects" icon={<Construction size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
+            <div className="space-y-4">
+                {data.projects?.map((proj, i) => (
+                     <div key={i}>
+                        <h3 className="font-bold">{proj.name}</h3>
+                        <p className="whitespace-pre-line text-sm text-gray-600">{proj.description}</p>
+                    </div>
+                ))}
+            </div>
         </Section>
         <Section title="Education" icon={<GraduationCap size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.education}</p>
+            <div className="space-y-2">
+                {data.education?.map((edu, i) => (
+                     <div key={i}>
+                        <h3 className="font-bold">{edu.degree} ({edu.year})</h3>
+                        <p className="text-sm text-gray-600">Score: {edu.score}</p>
+                    </div>
+                ))}
+            </div>
         </Section>
-        {template !== 'modern' && data.skills && (
+        {template !== 'modern' && (
           <Section title="Skills" icon={<Code size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
             {skillsSection}
           </Section>
         )}
          <Section title="Certifications & Licenses" icon={<Award size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.certifications}</p>
+            <ul className="list-disc list-inside">
+                {data.certifications?.map((cert, i) => <li key={i}>{cert.name}</li>)}
+            </ul>
         </Section>
         <Section title="Extracurricular Activities" icon={<Star size={14}/>} className={t.section} styles={{ title: dynamicStyles.sectionTitle, icon: dynamicStyles.sectionIcon }}>
-            <p className="whitespace-pre-line">{data.extracurricular}</p>
+            <div className="space-y-4">
+                {data.extracurricular?.map((extra, i) => (
+                    <div key={i}>
+                        <h3 className="font-bold">{extra.activity}</h3>
+                        <p className="whitespace-pre-line text-sm text-gray-600">{extra.description}</p>
+                    </div>
+                ))}
+            </div>
         </Section>
       </>
     );
@@ -195,7 +241,6 @@ const TemplateRenderer = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({
       </header>
     );
 
-    // Main Renderer
     return (
         <div id="resume-preview-content" ref={ref} className={cn(t.container, 'w-[800px] min-h-[1131px]')}>
             {template === 'modern' ? (
@@ -209,17 +254,15 @@ const TemplateRenderer = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({
                            <Section title="Contact" icon={<Mail size={14}/>} className={t.section} styles={{ title: {color: 'white', borderBottom: '1px solid rgba(255,255,255,0.3)', ...templates.modern.sectionTitle}, icon: { backgroundColor: 'white', color: c.main } }}>
                              {contactInfo}
                            </Section>
-                           {data.skills && 
                             <Section title="Skills" icon={<Code size={14}/>} className={t.section} styles={{ title: {color: 'white', borderBottom: '1px solid rgba(255,255,255,0.3)', ...templates.modern.sectionTitle}, icon: { backgroundColor: 'white', color: c.main } }}>
                                 <div className="flex flex-wrap gap-2 mt-2">
-                                  {data.skills?.split(',').map((skill, index) => (
+                                  {data.skills?.map((skill, index) => (
                                       <span key={index} className="text-xs font-medium px-2.5 py-1 rounded-full bg-white/20 text-white">
-                                          {skill.trim()}
+                                          {skill.name.trim()}
                                       </span>
                                   ))}
                                 </div>
                             </Section>
-                           }
                         </div>
                     </aside>
                     <main className={t.main}>{mainContent}</main>
@@ -241,3 +284,5 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps
     return <TemplateRenderer ref={ref} data={data} template={template} color={color} />;
 });
 ResumePreview.displayName = 'ResumePreview';
+
+    

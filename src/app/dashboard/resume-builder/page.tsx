@@ -2,15 +2,15 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye } from 'lucide-react';
+import { Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye, PlusCircle, Trash2 } from 'lucide-react';
 import { ResumePreview } from '@/components/dashboard/resume-preview';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -18,6 +18,32 @@ import { useToast } from '@/hooks/use-toast';
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
 import { saveAs } from 'file-saver';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Separator } from '@/components/ui/separator';
+
+const experienceSchema = z.object({
+  companyName: z.string().min(1, "Company name is required"),
+  role: z.string().min(1, "Role is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+const internshipSchema = z.object({
+  role: z.string().min(1, "Role is required"),
+  companyName: z.string().min(1, "Company name is required"),
+  duration: z.string().min(1, "Duration is required"),
+  description: z.string().min(1, "Description is required"),
+});
+
+const educationSchema = z.object({
+  degree: z.string().min(1, "Degree/Course is required"),
+  year: z.string().min(1, "Year is required"),
+  score: z.string().min(1, "Score is required"),
+});
+
+const skillSchema = z.object({ name: z.string().min(1, "Skill cannot be empty") });
+const certificationSchema = z.object({ name: z.string().min(1, "Certification cannot be empty") });
+const projectSchema = z.object({ name: z.string().min(1, "Project name cannot be empty"), description: z.string() });
+const extracurricularSchema = z.object({ activity: z.string().min(1, "Activity cannot be empty"), description: z.string() });
+
 
 const resumeFormSchema = z.object({
   fullName: z.string().min(1, 'Full name is required'),
@@ -25,16 +51,18 @@ const resumeFormSchema = z.object({
   phone: z.string().min(1, 'Phone number is required'),
   linkedin: z.string().url('Invalid LinkedIn URL').optional().or(z.literal('')),
   summary: z.string().min(1, 'Professional summary is required'),
-  experience: z.string().min(1, 'Work experience is required'),
-  education: z.string().min(1, 'Education is required'),
-  skills: z.string().min(1, 'Skills are required'),
   industry: z.string().optional(),
   jobPosition: z.string().optional(),
-  internships: z.string().optional(),
-  extracurricular: z.string().optional(),
-  certifications: z.string().optional(),
-  projects: z.string().optional(),
+  
+  experience: z.array(experienceSchema),
+  internships: z.array(internshipSchema),
+  education: z.array(educationSchema),
+  projects: z.array(projectSchema),
+  skills: z.array(skillSchema),
+  certifications: z.array(certificationSchema),
+  extracurricular: z.array(extracurricularSchema),
 });
+
 
 export type ResumeData = z.infer<typeof resumeFormSchema>;
 export type TemplateType = "classic" | "modern" | "creative";
@@ -57,17 +85,25 @@ export default function ResumeBuilderPage() {
       phone: '',
       linkedin: '',
       summary: '',
-      experience: '',
-      education: '',
-      skills: '',
       industry: '',
       jobPosition: '',
-      internships: '',
-      extracurricular: '',
-      certifications: '',
-      projects: '',
+      experience: [],
+      internships: [],
+      education: [],
+      projects: [],
+      skills: [],
+      certifications: [],
+      extracurricular: [],
     },
   });
+
+  const { fields: expFields, append: appendExp, remove: removeExp } = useFieldArray({ control: form.control, name: "experience" });
+  const { fields: internFields, append: appendIntern, remove: removeIntern } = useFieldArray({ control: form.control, name: "internships" });
+  const { fields: eduFields, append: appendEdu, remove: removeEdu } = useFieldArray({ control: form.control, name: "education" });
+  const { fields: projectFields, append: appendProject, remove: removeProject } = useFieldArray({ control: form.control, name: "projects" });
+  const { fields: skillFields, append: appendSkill, remove: removeSkill } = useFieldArray({ control: form.control, name: "skills" });
+  const { fields: certFields, append: appendCert, remove: removeCert } = useFieldArray({ control: form.control, name: "certifications" });
+  const { fields: extraFields, append: appendExtra, remove: removeExtra } = useFieldArray({ control: form.control, name: "extracurricular" });
   
   const resumeData = form.watch();
 
@@ -106,10 +142,7 @@ export default function ResumeBuilderPage() {
             `);
             const printContainer = printWindow.document.getElementById('print-container');
             if (printContainer) {
-                // We need a div to mount the preview for printing
                 const contentToPrint = document.createElement('div');
-                // The ref is on a div that contains the ResumePreview component
-                // So we need to clone the child of the ref's current element
                 if (resumePreviewRef.current?.firstChild) {
                     contentToPrint.appendChild(resumePreviewRef.current.firstChild.cloneNode(true));
                     printContainer.appendChild(contentToPrint);
@@ -154,28 +187,39 @@ export default function ResumeBuilderPage() {
             }),
             new Paragraph({ text: 'Professional Summary', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
             new Paragraph(data.summary),
+            
             new Paragraph({ text: 'Work Experience', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-            ...data.experience.split('\n').map(exp => new Paragraph({ text: exp, bullet: { level: 0 } })),
-            ...(data.internships ? [
-              new Paragraph({ text: 'Internships', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-              ...data.internships.split('\n').map(intern => new Paragraph({ text: intern, bullet: { level: 0 } }))
-            ] : []),
-             ...(data.projects ? [
-                new Paragraph({ text: 'Projects', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-                ...data.projects.split('\n').map(proj => new Paragraph({ text: proj, bullet: { level: 0 } }))
-            ] : []),
+            ...data.experience.flatMap(exp => [
+                new Paragraph({ children: [new TextRun({ text: exp.companyName, bold: true }), new TextRun({ text: ` - ${exp.role}`}) ] }),
+                new Paragraph({ text: exp.description, style: "ListParagraph" })
+            ]),
+
+            new Paragraph({ text: 'Internships', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
+            ...data.internships.flatMap(intern => [
+                new Paragraph({ children: [new TextRun({ text: intern.role, bold: true }), new TextRun({ text: ` at ${intern.companyName} (${intern.duration})`}) ] }),
+                new Paragraph({ text: intern.description, style: "ListParagraph" })
+            ]),
+            
+            new Paragraph({ text: 'Projects', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
+            ...data.projects.flatMap(proj => [
+                new Paragraph({ children: [new TextRun({ text: proj.name, bold: true })] }),
+                new Paragraph({ text: proj.description, style: "ListParagraph" })
+            ]),
+
             new Paragraph({ text: 'Education', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-            ...data.education.split('\n').map(edu => new Paragraph({ text: edu, bullet: { level: 0 } })),
+            ...data.education.map(edu => new Paragraph({ text: `${edu.degree} (${edu.year}) - ${edu.score}` })),
+
             new Paragraph({ text: 'Skills', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-            new Paragraph(data.skills),
-            ...(data.certifications ? [
-                new Paragraph({ text: 'Certifications & Licenses', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-                ...data.certifications.split('\n').map(cert => new Paragraph({ text: cert, bullet: { level: 0 } }))
-            ] : []),
-            ...(data.extracurricular ? [
-                new Paragraph({ text: 'Extracurricular Activities', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
-                ...data.extracurricular.split('\n').map(extra => new Paragraph({ text: extra, bullet: { level: 0 } }))
-            ] : []),
+            new Paragraph(data.skills.map(s => s.name).join(', ')),
+           
+            new Paragraph({ text: 'Certifications & Licenses', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
+            ...data.certifications.map(cert => new Paragraph({ text: cert.name, bullet: { level: 0 } })),
+
+            new Paragraph({ text: 'Extracurricular Activities', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
+             ...data.extracurricular.flatMap(extra => [
+                new Paragraph({ children: [new TextRun({ text: extra.activity, bold: true })] }),
+                new Paragraph({ text: extra.description, style: "ListParagraph" })
+            ]),
           ],
         },
       ],
@@ -244,7 +288,6 @@ export default function ResumeBuilderPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {/* Column 1: Form */}
       <div className="lg:col-span-1">
         <Card>
           <CardHeader>
@@ -253,49 +296,144 @@ export default function ResumeBuilderPage() {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form className="space-y-4">
-                <FormField control={form.control} name="fullName" render={({ field }) => (
-                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Enter your full name" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="email" render={({ field }) => (
-                    <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input type="email" placeholder="Enter your email address" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="phone" render={({ field }) => (
-                    <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" placeholder="Enter your phone number" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="linkedin" render={({ field }) => (
-                    <FormItem><FormLabel>LinkedIn Profile</FormLabel><FormControl><Input placeholder="Enter your LinkedIn profile URL" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="industry" render={({ field }) => (
-                    <FormItem><FormLabel>Target Industry</FormLabel><FormControl><Input placeholder="e.g., Software Engineering" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="jobPosition" render={({ field }) => (
-                    <FormItem><FormLabel>Target Job Position</FormLabel><FormControl><Input placeholder="e.g., Frontend Developer" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="summary" render={({ field }) => (
-                    <FormItem><FormLabel>Professional Summary</FormLabel><FormControl><Textarea placeholder="A brief summary about your professional background..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="experience" render={({ field }) => (
-                    <FormItem><FormLabel>Work Experience</FormLabel><FormControl><Textarea placeholder="Your work experience (use bullet points for details)..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="internships" render={({ field }) => (
-                    <FormItem><FormLabel>Internships</FormLabel><FormControl><Textarea placeholder="Details about your internships..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="projects" render={({ field }) => (
-                    <FormItem><FormLabel>Projects</FormLabel><FormControl><Textarea placeholder="Key projects you've worked on..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="education" render={({ field }) => (
-                    <FormItem><FormLabel>Education</FormLabel><FormControl><Textarea placeholder="Your educational qualifications..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="skills" render={({ field }) => (
-                    <FormItem><FormLabel>Skills</FormLabel><FormControl><Input placeholder="e.g., React, Next.js, TypeScript, Tailwind CSS" {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="certifications" render={({ field }) => (
-                    <FormItem><FormLabel>Certifications & Licenses</FormLabel><FormControl><Textarea placeholder="Any relevant certifications..." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-                <FormField control={form.control} name="extracurricular" render={({ field }) => (
-                    <FormItem><FormLabel>Extracurricular Activities</FormLabel><FormControl><Textarea placeholder="Clubs, sports, volunteering, etc." {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
+              <form className="space-y-6">
+                
+                {/* Personal Details */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Personal Details</h3>
+                  <FormField control={form.control} name="fullName" render={({ field }) => (
+                      <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Enter your full name" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="email" render={({ field }) => (
+                      <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input type="email" placeholder="Enter your email address" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="phone" render={({ field }) => (
+                      <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" placeholder="Enter your phone number" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="linkedin" render={({ field }) => (
+                      <FormItem><FormLabel>LinkedIn Profile</FormLabel><FormControl><Input placeholder="Enter your LinkedIn profile URL" {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                </div>
+                <Separator />
+
+                {/* Professional Summary */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Professional Summary</h3>
+                   <FormField control={form.control} name="summary" render={({ field }) => (
+                      <FormItem><FormControl><Textarea placeholder="A brief summary about your professional background..." {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                </div>
+                <Separator />
+
+                {/* Work Experience */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Work Experience</h3>
+                  {expFields.map((field, index) => (
+                    <Card key={field.id} className="p-4 relative">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                         <FormField control={form.control} name={`experience.${index}.companyName`} render={({ field }) => (<FormItem><FormLabel>Company Name</FormLabel><FormControl><Input placeholder="e.g., Google" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                         <FormField control={form.control} name={`experience.${index}.role`} render={({ field }) => (<FormItem><FormLabel>Your Role</FormLabel><FormControl><Input placeholder="e.g., Software Engineer" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       </div>
+                       <FormField control={form.control} name={`experience.${index}.description`} render={({ field }) => (<FormItem className="mt-4"><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Describe your responsibilities and achievements..." {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeExp(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </Card>
+                  ))}
+                  <Button type="button" variant="outline" size="sm" onClick={() => appendExp({ companyName: '', role: '', description: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Experience</Button>
+                </div>
+                <Separator />
+
+                {/* Internships */}
+                <div className="space-y-4">
+                   <h3 className="text-lg font-semibold">Internships</h3>
+                   {internFields.map((field, index) => (
+                      <Card key={field.id} className="p-4 relative">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <FormField control={form.control} name={`internships.${index}.role`} render={({ field }) => (<FormItem><FormLabel>Role</FormLabel><FormControl><Input placeholder="e.g., Frontend Developer Intern" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                          <FormField control={form.control} name={`internships.${index}.companyName`} render={({ field }) => (<FormItem><FormLabel>Company Name</FormLabel><FormControl><Input placeholder="e.g., Microsoft" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                          <FormField control={form.control} name={`internships.${index}.duration`} render={({ field }) => (<FormItem><FormLabel>Duration</FormLabel><FormControl><Input placeholder="e.g., 3 Months" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                        </div>
+                        <FormField control={form.control} name={`internships.${index}.description`} render={({ field }) => (<FormItem className="mt-4"><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Describe your tasks and what you learned..." {...field} /></FormControl><FormMessage /></FormItem> )} />
+                        <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeIntern(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                      </Card>
+                   ))}
+                   <Button type="button" variant="outline" size="sm" onClick={() => appendIntern({ role: '', companyName: '', duration: '', description: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Internship</Button>
+                </div>
+                <Separator />
+                
+                {/* Education */}
+                <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Education</h3>
+                    {eduFields.map((field, index) => (
+                        <Card key={field.id} className="p-4 relative">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <FormField control={form.control} name={`education.${index}.degree`} render={({ field }) => (<FormItem><FormLabel>Degree/Course</FormLabel><FormControl><Input placeholder="e.g., B.Tech in CSE" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                                <FormField control={form.control} name={`education.${index}.year`} render={({ field }) => (<FormItem><FormLabel>Year</FormLabel><FormControl><Input placeholder="e.g., 2020-2024" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                                <FormField control={form.control} name={`education.${index}.score`} render={({ field }) => (<FormItem><FormLabel>Percentage/CGPA</FormLabel><FormControl><Input placeholder="e.g., 8.5 CGPA" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                            </div>
+                            <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeEdu(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                        </Card>
+                    ))}
+                    <Button type="button" variant="outline" size="sm" onClick={() => appendEdu({ degree: '', year: '', score: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Education</Button>
+                </div>
+                <Separator />
+
+                {/* Skills */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Skills</h3>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {skillFields.map((field, index) => (
+                        <Card key={field.id} className="p-2 flex items-center gap-2">
+                           <FormField control={form.control} name={`skills.${index}.name`} render={({ field }) => (<FormItem className="flex-grow"><FormControl><Input placeholder="e.g., React" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                           <Button type="button" variant="ghost" size="icon" onClick={() => removeSkill(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                        </Card>
+                    ))}
+                  </div>
+                   <Button type="button" variant="outline" size="sm" onClick={() => appendSkill({ name: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Skill</Button>
+                </div>
+                <Separator />
+
+                {/* Projects */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Projects</h3>
+                  {projectFields.map((field, index) => (
+                    <Card key={field.id} className="p-4 relative">
+                       <FormField control={form.control} name={`projects.${index}.name`} render={({ field }) => (<FormItem><FormLabel>Project Name</FormLabel><FormControl><Input placeholder="e.g., E-commerce Website" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       <FormField control={form.control} name={`projects.${index}.description`} render={({ field }) => (<FormItem className="mt-4"><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Describe the project..." {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeProject(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </Card>
+                  ))}
+                  <Button type="button" variant="outline" size="sm" onClick={() => appendProject({ name: '', description: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Project</Button>
+                </div>
+                <Separator />
+
+                {/* Certifications */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Certifications & Licenses</h3>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {certFields.map((field, index) => (
+                        <Card key={field.id} className="p-2 flex items-center gap-2">
+                           <FormField control={form.control} name={`certifications.${index}.name`} render={({ field }) => (<FormItem className="flex-grow"><FormControl><Input placeholder="e.g., Google Cloud Certified" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                           <Button type="button" variant="ghost" size="icon" onClick={() => removeCert(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                        </Card>
+                    ))}
+                  </div>
+                   <Button type="button" variant="outline" size="sm" onClick={() => appendCert({ name: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Certification</Button>
+                </div>
+                <Separator />
+                
+                {/* Extracurricular */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold">Extracurricular Activities</h3>
+                  {extraFields.map((field, index) => (
+                    <Card key={field.id} className="p-4 relative">
+                       <FormField control={form.control} name={`extracurricular.${index}.activity`} render={({ field }) => (<FormItem><FormLabel>Activity/Organization</FormLabel><FormControl><Input placeholder="e.g., Coding Club" {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       <FormField control={form.control} name={`extracurricular.${index}.description`} render={({ field }) => (<FormItem className="mt-4"><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Your role and contributions..." {...field} /></FormControl><FormMessage /></FormItem> )} />
+                       <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeExtra(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </Card>
+                  ))}
+                  <Button type="button" variant="outline" size="sm" onClick={() => appendExtra({ activity: '', description: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Activity</Button>
+                </div>
+
               </form>
             </Form>
           </CardContent>
