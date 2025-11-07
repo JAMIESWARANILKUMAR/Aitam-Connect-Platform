@@ -73,8 +73,11 @@ const technicalFaqs = [
                 <p className="text-sm">
                   <strong>Email (Personal):</strong> <a href="mailto:yourstrulyjamianil@gmail.com" className="text-primary underline">yourstrulyjamianil@gmail.com</a>
                 </p>
-                <p className="text-sm">
-                  <strong>Phone:</strong> +91 6301588867
+                <p className="text-sm font-semibold">
+                  Phone: <a href="tel:+916301588867" className="text-primary underline font-bold">+91 6301588867</a>
+                </p>
+                 <p className="text-sm font-semibold">
+                    WhatsApp: <a href="https://wa.me/qr/QNAZHSYPK7EJP1" target="_blank" rel="noopener noreferrer" className="text-primary underline font-bold">Chat on WhatsApp</a>
                 </p>
             </div>
         </div>
