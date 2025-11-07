@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { doc, updateDoc } from 'firebase/firestore';
 import { updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import type { UserProfile } from '@/lib/database/users';
-import { Loader2, User, KeyRound, ShieldCheck } from 'lucide-react';
+import { Loader2, User, KeyRound, ShieldCheck, BadgeInfo } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
@@ -157,17 +157,25 @@ export default function SettingsPage() {
                 <CardContent className="space-y-8">
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium flex items-center gap-2"><User className="w-5 h-5 text-primary" /> Profile Details</h3>
-                    <div className="flex items-center gap-4">
-                    <Avatar className="h-20 w-20">
-                        <AvatarImage src={user?.photoURL || undefined} data-ai-hint="profile picture" />
-                        <AvatarFallback>{getInitials(user?.displayName)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col gap-2">
-                        <Label htmlFor="picture">Update your profile picture</Label>
-                        <div className="flex gap-2">
-                            <Input id="picture" type="file" className="max-w-xs" />
+                    <div className="flex items-center gap-6">
+                        <div className="flex flex-col items-center gap-2">
+                            <Avatar className="h-24 w-24">
+                                <AvatarImage src={user?.photoURL || undefined} data-ai-hint="profile picture" />
+                                <AvatarFallback>{getInitials(user?.displayName)}</AvatarFallback>
+                            </Avatar>
+                             <div className="text-center">
+                                <p className="text-xs font-semibold text-muted-foreground">{userProfile?.designation === 'Student' ? 'Roll Number' : 'User ID'}</p>
+                                <p className="text-sm font-mono bg-muted px-2 py-1 rounded-md">{userProfile?.rollNumber || user?.uid}</p>
+                            </div>
                         </div>
-                    </div>
+
+                        <div className="flex-1">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="picture">Update your profile picture</Label>
+                                <Input id="picture" type="file" className="max-w-xs" />
+                                <p className="text-xs text-muted-foreground">This feature is not yet implemented.</p>
+                            </div>
+                        </div>
                     </div>
                     <FormField
                         control={form.control}
@@ -203,15 +211,6 @@ export default function SettingsPage() {
                     </div>
                 </div>
 
-                <div className="space-y-4">
-                    <h3 className="text-lg font-medium flex items-center gap-2"><KeyRound className="w-5 h-5 text-primary" /> Unique Identifier</h3>
-                     <div className="space-y-2">
-                        <Label>{userProfile?.designation === 'Student' ? 'Student Roll Number' : 'Unique User ID'}</Label>
-                        <Input value={userProfile?.rollNumber || user?.uid || ''} readOnly disabled />
-                         <p className="text-xs text-muted-foreground">This is your unique identifier in the system and cannot be changed.</p>
-                    </div>
-                </div>
-
                 <Separator />
 
                 <div className="space-y-4">
@@ -224,7 +223,6 @@ export default function SettingsPage() {
                         </Button>
                     </div>
                 </div>
-
 
                 </CardContent>
                 <CardFooter>
