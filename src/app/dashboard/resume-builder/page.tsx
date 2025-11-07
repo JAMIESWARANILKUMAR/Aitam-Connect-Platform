@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState, useRef } from 'react';
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye, PlusCircle, Trash2 } from 'lucide-react';
+import { Palette, Share, Linkedin, FileType, FileText as FileTextIcon, Eye, PlusCircle, Trash2, CalendarIcon } from 'lucide-react';
 import { ResumePreview } from '@/components/dashboard/resume-preview';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -19,6 +20,11 @@ import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
 import { saveAs } from 'file-saver';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const experienceSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
@@ -29,8 +35,18 @@ const experienceSchema = z.object({
 const internshipSchema = z.object({
   role: z.string().min(1, "Role is required"),
   companyName: z.string().min(1, "Company name is required"),
-  duration: z.string().min(1, "Duration is required"),
+  startDate: z.date({ required_error: "A start date is required."}),
+  endDate: z.date().optional(),
+  isPresent: z.boolean().optional(),
   description: z.string().min(1, "Description is required"),
+}).refine(data => {
+    if (!data.isPresent) {
+        return !!data.endDate;
+    }
+    return true;
+}, {
+    message: "End date is required unless you are currently working here.",
+    path: ["endDate"],
 });
 
 const educationSchema = z.object({
@@ -42,7 +58,7 @@ const educationSchema = z.object({
 const skillSchema = z.object({ name: z.string().min(1, "Skill cannot be empty") });
 const certificationSchema = z.object({ name: z.string().min(1, "Certification cannot be empty") });
 const projectSchema = z.object({ name: z.string().min(1, "Project name cannot be empty"), description: z.string() });
-const extracurricularSchema = z.object({ activity: z.string().min(1, "Activity cannot be empty"), description: z.string() });
+const extracurricularSchema = z.object({ activity: zstring().min(1, "Activity cannot be empty"), description: z.string() });
 
 
 const resumeFormSchema = z.object({
@@ -196,7 +212,7 @@ export default function ResumeBuilderPage() {
 
             new Paragraph({ text: 'Internships', heading: HeadingLevel.HEADING_1, spacing: { before: 200 } }),
             ...data.internships.flatMap(intern => [
-                new Paragraph({ children: [new TextRun({ text: intern.role, bold: true }), new TextRun({ text: ` at ${intern.companyName} (${intern.duration})`}) ] }),
+                new Paragraph({ children: [new TextRun({ text: intern.role, bold: true }), new TextRun({ text: ` at ${intern.companyName} (${format(intern.startDate, 'MMM yyyy')} - ${intern.isPresent ? 'Present' : (intern.endDate ? format(intern.endDate, 'MMM yyyy') : '')})`}) ] }),
                 new Paragraph({ text: intern.description, style: "ListParagraph" })
             ]),
             
@@ -350,13 +366,131 @@ export default function ResumeBuilderPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField control={form.control} name={`internships.${index}.role`} render={({ field }) => (<FormItem><FormLabel>Role</FormLabel><FormControl><Input placeholder="e.g., Frontend Developer Intern" {...field} /></FormControl><FormMessage /></FormItem> )} />
                           <FormField control={form.control} name={`internships.${index}.companyName`} render={({ field }) => (<FormItem><FormLabel>Company Name</FormLabel><FormControl><Input placeholder="e.g., Microsoft" {...field} /></FormControl><FormMessage /></FormItem> )} />
-                          <FormField control={form.control} name={`internships.${index}.duration`} render={({ field }) => (<FormItem><FormLabel>Duration</FormLabel><FormControl><Input placeholder="e.g., 3 Months" {...field} /></FormControl><FormMessage /></FormItem> )} />
                         </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                             <FormField
+                                control={form.control}
+                                name={`internships.${index}.startDate`}
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col">
+                                    <FormLabel>Start Date</FormLabel>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                                "w-full pl-3 text-left font-normal",
+                                                !field.value && "text-muted-foreground"
+                                            )}
+                                            >
+                                            {field.value ? (
+                                                format(field.value, "MMM yyyy")
+                                            ) : (
+                                                <span>Pick a date</span>
+                                            )}
+                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            captionLayout="dropdown-buttons"
+                                            fromYear={1990}
+                                            toYear={new Date().getFullYear() + 5}
+                                            selected={field.value}
+                                            onSelect={field.onChange}
+                                            disabled={(date) =>
+                                                date > new Date() || date < new Date("1900-01-01")
+                                            }
+                                            initialFocus
+                                        />
+                                        </PopoverContent>
+                                    </Popover>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                             <FormField
+                                control={form.control}
+                                name={`internships.${index}.endDate`}
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-col">
+                                    <FormLabel>End Date</FormLabel>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                                "w-full pl-3 text-left font-normal",
+                                                !field.value && "text-muted-foreground"
+                                            )}
+                                            disabled={form.watch(`internships.${index}.isPresent`)}
+                                            >
+                                            {field.value ? (
+                                                format(field.value, "MMM yyyy")
+                                            ) : (
+                                                <span>Pick a date</span>
+                                            )}
+                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="start">
+                                        <Calendar
+                                            mode="single"
+                                            captionLayout="dropdown-buttons"
+                                            fromYear={1990}
+                                            toYear={new Date().getFullYear() + 5}
+                                            selected={field.value}
+                                            onSelect={field.onChange}
+                                            disabled={(date) =>
+                                                date > new Date() || date < new Date("1900-01-01") || (form.getValues(`internships.${index}.startDate`)! > date)
+                                            }
+                                            initialFocus
+                                        />
+                                        </PopoverContent>
+                                    </Popover>
+                                    <FormMessage />
+                                    </FormItem>
+                                )}
+                                />
+                        </div>
+
+                        <FormField
+                            control={form.control}
+                            name={`internships.${index}.isPresent`}
+                            render={({ field }) => (
+                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 mt-4">
+                                <FormControl>
+                                    <Checkbox
+                                    checked={field.value}
+                                    onCheckedChange={(checked) => {
+                                        field.onChange(checked);
+                                        if (checked) {
+                                            form.setValue(`internships.${index}.endDate`, undefined);
+                                            form.clearErrors(`internships.${index}.endDate`);
+                                        }
+                                    }}
+                                    />
+                                </FormControl>
+                                <div className="space-y-1 leading-none">
+                                    <FormLabel>
+                                    I am currently working here
+                                    </FormLabel>
+                                </div>
+                                </FormItem>
+                            )}
+                            />
+
                         <FormField control={form.control} name={`internships.${index}.description`} render={({ field }) => (<FormItem className="mt-4"><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Describe your tasks and what you learned..." {...field} /></FormControl><FormMessage /></FormItem> )} />
                         <Button type="button" variant="ghost" size="icon" className="absolute top-2 right-2" onClick={() => removeIntern(index)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                       </Card>
                    ))}
-                   <Button type="button" variant="outline" size="sm" onClick={() => appendIntern({ role: '', companyName: '', duration: '', description: '' })}><PlusCircle className="mr-2 h-4 w-4"/>Add Internship</Button>
+                   <Button type="button" variant="outline" size="sm" onClick={() => appendIntern({ role: '', companyName: '', description: '', startDate: new Date(), isPresent: false })}><PlusCircle className="mr-2 h-4 w-4"/>Add Internship</Button>
                 </div>
                 <Separator />
                 
@@ -547,5 +681,3 @@ export default function ResumeBuilderPage() {
     </div>
   );
 }
-
-    

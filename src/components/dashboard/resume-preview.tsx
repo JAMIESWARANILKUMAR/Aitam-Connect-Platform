@@ -1,10 +1,13 @@
 
+
 'use client';
 
 import React from 'react';
 import type { ResumeData, TemplateType, ResumeColor } from '@/app/dashboard/resume-builder/page';
 import { Mail, Phone, Linkedin, Briefcase, GraduationCap, Star, Award, Code, Construction } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
+
 
 interface ResumePreviewProps {
   data: ResumeData;
@@ -183,8 +186,11 @@ const TemplateRenderer = React.forwardRef<HTMLDivElement, ResumePreviewProps>(({
             <div className="space-y-4">
                 {data.internships?.map((intern, i) => (
                     <div key={i}>
-                         <h3 className="font-bold">{intern.role} at {intern.companyName} - <span className="font-medium italic">{intern.duration}</span></h3>
-                        <p className="whitespace-pre-line text-sm text-gray-600">{intern.description}</p>
+                         <h3 className="font-bold">{intern.role} at {intern.companyName}</h3>
+                         <p className="text-sm font-medium italic text-gray-600">
+                             {intern.startDate ? format(intern.startDate, 'MMM yyyy') : ''} - {intern.isPresent ? 'Present' : (intern.endDate ? format(intern.endDate, 'MMM yyyy') : '')}
+                         </p>
+                        <p className="whitespace-pre-line text-sm text-gray-600 mt-1">{intern.description}</p>
                     </div>
                 ))}
             </div>
@@ -284,5 +290,3 @@ export const ResumePreview = React.forwardRef<HTMLDivElement, ResumePreviewProps
     return <TemplateRenderer ref={ref} data={data} template={template} color={color} />;
 });
 ResumePreview.displayName = 'ResumePreview';
-
-    
