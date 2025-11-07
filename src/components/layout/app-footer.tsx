@@ -160,14 +160,6 @@ export function AppFooter() {
             <div className="flex flex-col sm:flex-row justify-between items-center text-center text-sm text-slate-400">
                 <p>© 2025 AITAM Connect. All Rights Reserved.</p>
                  <div className="flex items-center gap-2 mt-4 sm:mt-0">
-                    <Image
-                      src={placeholderImages.jamiProfile.url}
-                      alt="Developer Avatar"
-                      width={32}
-                      height={32}
-                      className="rounded-full"
-                      data-ai-hint="profile picture"
-                    />
                     <p className="text-sm text-slate-400 mt-1">
                       Developed & Designed by Vyntyra Consultancy Services Pvt. Ltd
                     </p>
