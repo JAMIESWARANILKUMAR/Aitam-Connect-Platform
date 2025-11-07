@@ -8,13 +8,8 @@ import placeholderImages from "@/lib/placeholder-images.json";
 
 export default function HeroSection() {
     return (
-        <section 
-          id="about" 
-          className="relative w-full flex items-center justify-center bg-cover bg-center py-20 md:py-24"
-          style={{ backgroundImage: `url('https://adityatekkali.edu.in/assets/images/bg/bg-image-17.webp')` }}
-        >
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-          <div className="relative container px-4 md:px-6">
+        <section id="about" className="w-full py-12 md:py-24 lg:py-32 bg-colorful-gradient">
+          <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px] items-center">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
