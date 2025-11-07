@@ -58,7 +58,7 @@ const educationSchema = z.object({
 const skillSchema = z.object({ name: z.string().min(1, "Skill cannot be empty") });
 const certificationSchema = z.object({ name: z.string().min(1, "Certification cannot be empty") });
 const projectSchema = z.object({ name: z.string().min(1, "Project name cannot be empty"), description: z.string() });
-const extracurricularSchema = z.object({ activity: zstring().min(1, "Activity cannot be empty"), description: z.string() });
+const extracurricularSchema = z.object({ activity: z.string().min(1, "Activity cannot be empty"), description: z.string() });
 
 
 const resumeFormSchema = z.object({
