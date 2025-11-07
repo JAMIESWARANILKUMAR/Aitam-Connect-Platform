@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -72,21 +73,23 @@ export default function AlumniPage() {
           )}
 
           {!loading && !error && filteredAlumni && filteredAlumni.length > 0 && filteredAlumni.map((alum) => (
-            <Card key={alum.id} className="flex flex-col items-center justify-center p-6 text-center">
-              <Avatar className="h-24 w-24 mb-4">
-                <AvatarImage src={alum.profileImageUrl} data-ai-hint="person face" />
-                <AvatarFallback>{getInitials(alum.name)}</AvatarFallback>
-              </Avatar>
-              <h3 className="text-lg font-bold">{alum.name}</h3>
-              <p className="text-sm text-muted-foreground">{alum.workingStatus || alum.designation}</p>
-              <div className="mt-2 flex flex-wrap justify-center gap-2">
-                {alum.passOutYear && <Badge variant="secondary">Batch of {alum.passOutYear}</Badge>}
-                {alum.branch && <Badge variant="secondary">{alum.branch}</Badge>}
-              </div>
-               <Button variant="outline" size="sm" className="mt-4">
-                Connect
-              </Button>
-            </Card>
+            <Link key={alum.id} href={`/dashboard/alumni/${alum.id}`} className="block transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 hover:bg-card rounded-lg">
+              <Card className="flex h-full flex-col items-center justify-center p-6 text-center border-0 shadow-none">
+                <Avatar className="h-24 w-24 mb-4">
+                  <AvatarImage src={alum.profileImageUrl} data-ai-hint="person face" />
+                  <AvatarFallback>{getInitials(alum.name)}</AvatarFallback>
+                </Avatar>
+                <h3 className="text-lg font-bold">{alum.name}</h3>
+                <p className="text-sm text-muted-foreground">{alum.workingStatus || alum.designation}</p>
+                <div className="mt-2 flex flex-wrap justify-center gap-2">
+                  {alum.passOutYear && <Badge variant="secondary">Batch of {alum.passOutYear}</Badge>}
+                  {alum.branch && <Badge variant="secondary">{alum.branch}</Badge>}
+                </div>
+                <Button variant="outline" size="sm" className="mt-4">
+                  View Profile
+                </Button>
+              </Card>
+            </Link>
           ))}
           
            {!loading && !error && (!filteredAlumni || filteredAlumni.length === 0) && (

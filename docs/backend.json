@@ -22,6 +22,34 @@
         "totalRespondedQuestions": {
           "type": "integer",
           "description": "A count of how many questions the user has contributed a consolidated answer to."
+        },
+        "linkedin": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the user's LinkedIn profile."
+        },
+        "specialization": {
+            "type": "string",
+            "description": "The user's domain of expertise or specialization."
+        },
+        "achievements": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "A list of the user's notable achievements."
+        },
+        "projects": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "description": {"type": "string"}
+                },
+                "required": ["name"]
+            },
+            "description": "A list of projects the user has worked on."
         }
       },
       "required": ["name", "designation", "totalRespondedQuestions"]
@@ -120,5 +148,3 @@
     }
   }
 }
-
-    
