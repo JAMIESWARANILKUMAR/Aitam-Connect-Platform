@@ -46,11 +46,11 @@ const technicalFaqs = [
     answer: (
       <div className="space-y-4">
         <div>
-          <p className="font-semibold text-slate-300">For General Support:</p>
+          <p className="font-semibold text-foreground/80">For General Support:</p>
           <p>For general technical issues or questions, please reach out to our support team at <a href="mailto:support@aitamconnect.adityatekkali.in" className="text-primary underline">support@aitamconnect.adityatekkali.in</a>.</p>
         </div>
         <div>
-          <p className="font-semibold text-slate-300">For Specific Complaints:</p>
+          <p className="font-semibold text-foreground/80">For Specific Complaints:</p>
           <p>For specific complaints, you can contact the administrator directly:</p>
           <div className="mt-2 pl-4 border-l-2 border-primary">
             <p className="font-bold">Dr. D. Yugandhar</p>
@@ -61,7 +61,7 @@ const technicalFaqs = [
           </div>
         </div>
         <div>
-            <p className="font-semibold text-slate-300">For Product-Related Complaints:</p>
+            <p className="font-semibold text-foreground/80">For Product-Related Complaints:</p>
             <p>For issues related to the product itself, you can contact the developer:</p>
              <div className="mt-2 pl-4 border-l-2 border-primary">
                 <p className="font-bold">Jami Eswar Anil Kumar</p>
@@ -88,14 +88,14 @@ const technicalFaqs = [
 
 export default function FaqSection() {
   return (
-    <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-slate-900 text-white">
+    <section id="faq" className="w-full py-12 md:py-24 lg:py-32 bg-background bg-grid-pattern text-foreground">
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="flex items-center gap-4">
              <HelpCircle className="w-10 h-10 text-primary" />
              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Frequently Asked Questions</h2>
           </div>
-          <p className="max-w-[900px] text-slate-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+          <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             Have a question? We've got answers. If you can't find what you're looking for, feel free to contact us.
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function FaqSection() {
                     {generalFaqs.map((faq, index) => (
                         <AccordionItem key={`gen-${index}`} value={`item-${index}`}>
                             <AccordionTrigger className="text-left hover:no-underline">{faq.question}</AccordionTrigger>
-                            <AccordionContent className="text-slate-400">
+                            <AccordionContent className="text-muted-foreground">
                                 {faq.answer}
                             </AccordionContent>
                         </AccordionItem>
@@ -127,7 +127,7 @@ export default function FaqSection() {
                     {technicalFaqs.map((faq, index) => (
                         <AccordionItem key={`tech-${index}`} value={`item-${index}`}>
                             <AccordionTrigger className="text-left hover:no-underline">{faq.question}</AccordionTrigger>
-                            <AccordionContent className="text-slate-400">
+                            <AccordionContent className="text-muted-foreground">
                                 {faq.answer}
                             </AccordionContent>
                         </AccordionItem>
