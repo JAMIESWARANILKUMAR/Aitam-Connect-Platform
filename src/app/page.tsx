@@ -7,12 +7,12 @@ import dynamic from 'next/dynamic';
 import { Button } from "@/components/ui/button";
 import { Info, Newspaper, Users, Calendar, ImageIcon, Handshake, Smartphone, Menu, ArrowRight } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import placeholderImages from "@/lib/placeholder-images.json";
 import { ScrollFadeIn } from "@/components/landing/scroll-fade-in";
 
 // Dynamically import heavy components
 const HeroSection = dynamic(() => import('@/components/landing/hero-section'));
 const GallerySection = dynamic(() => import('@/components/landing/gallery-section'));
+const FeaturedQuestions = dynamic(() => import('@/components/landing/featured-questions'));
 const NewsSection = dynamic(() => import('@/components/landing/news-section'));
 const AlumniSection = dynamic(() => import('@/components/landing/alumni-section'));
 const LeadershipSection = dynamic(() => import('@/components/landing/leadership-section'));
@@ -114,6 +114,10 @@ export default function LandingPage() {
         <hr className="my-0 border-border" />
         <ScrollFadeIn>
             <GallerySection />
+        </ScrollFadeIn>
+        <hr className="my-0 border-border" />
+        <ScrollFadeIn>
+          <FeaturedQuestions />
         </ScrollFadeIn>
         <hr className="my-0 border-border" />
         <ScrollFadeIn>
