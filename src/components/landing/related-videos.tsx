@@ -8,17 +8,17 @@ import Link from 'next/link';
 
 const stats = [
   {
-    icon: <Rocket className="w-8 h-8 text-purple-500" />,
+    icon: <Rocket className="w-8 h-8 text-primary" />,
     value: '2',
     label: 'Successful Seasons',
   },
   {
-    icon: <Users className="w-8 h-8 text-green-500" />,
+    icon: <Users className="w-8 h-8 text-primary" />,
     value: '2000+',
     label: 'Participants',
   },
   {
-    icon: <FolderKanban className="w-8 h-8 text-blue-500" />,
+    icon: <FolderKanban className="w-8 h-8 text-primary" />,
     value: '90+',
     label: 'Projects Built',
   },
