@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Info, Newspaper, Users, Calendar, ImageIcon, Handshake, Smartphone, Menu, ArrowRight } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import placeholderImages from "@/lib/placeholder-images.json";
+import { ScrollFadeIn } from "@/components/landing/scroll-fade-in";
 
 // Dynamically import heavy components
 const HeroSection = dynamic(() => import('@/components/landing/hero-section'));
@@ -111,20 +112,36 @@ export default function LandingPage() {
       <main className="flex-1">
         <HeroSection />
         <hr className="my-0 border-border" />
-        <GallerySection />
+        <ScrollFadeIn>
+            <GallerySection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <NewsSection />
+        <ScrollFadeIn>
+            <NewsSection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <AlumniSection />
+        <ScrollFadeIn>
+            <AlumniSection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <LeadershipSection />
+        <ScrollFadeIn>
+            <LeadershipSection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <DeansSection />
+        <ScrollFadeIn>
+            <DeansSection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <StrengthSection />
-        <AchievementsSection />
+        <ScrollFadeIn>
+            <StrengthSection />
+        </ScrollFadeIn>
+        <ScrollFadeIn>
+            <AchievementsSection />
+        </ScrollFadeIn>
         <hr className="my-0 border-border" />
-        <PlacementsSection />
+        <ScrollFadeIn>
+            <PlacementsSection />
+        </ScrollFadeIn>
       </main>
       <AppFooter />
     </div>
