@@ -97,10 +97,10 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
-       <nav className="hidden md:flex items-center justify-center w-full bg-primary/5 border-b shadow-sm sticky top-16 z-10">
-        <div className="flex gap-6 lg:gap-8 py-3">
+       <nav className="hidden md:flex items-center justify-center w-full bg-primary text-primary-foreground shadow-lg sticky top-16 z-10">
+        <div className="flex gap-1 lg:gap-2 p-1">
           {navItems.map((item) => (
-            <Link key={item.name} href={item.href} className="flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            <Link key={item.name} href={item.href} className="flex items-center text-sm font-medium px-4 py-2 rounded-md hover:bg-primary-foreground/10 active:bg-primary-foreground/20 transition-all duration-300 ease-in-out transform hover:scale-105">
               {item.icon}
               {item.name}
             </Link>
