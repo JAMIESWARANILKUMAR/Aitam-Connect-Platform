@@ -22,12 +22,12 @@ export function AppFooter() {
             <p className="text-sm text-slate-400">
               The ultimate platform for students, alumni, and faculty to connect, share knowledge, and grow together.
             </p>
-            <div className="flex gap-4 mt-2">
-              <Link href="https://www.facebook.com/AITAMOfficial" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors"><Facebook className="w-6 h-6" /></Link>
-              <Link href="#" className="text-slate-400 hover:text-white transition-colors"><Twitter className="w-6 h-6" /></Link>
-              <Link href="#" className="text-slate-400 hover:text-white transition-colors"><Linkedin className="w-6 h-6" /></Link>
-              <Link href="https://www.instagram.com/aitam_official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors"><Instagram className="w-6 h-6" /></Link>
-              <Link href="https://youtube.com/@aitamofficial?si=ql2E9XFNiE__WR5d" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors"><Youtube className="w-6 h-6" /></Link>
+            <div className="flex gap-3 mt-2">
+              <Link href="https://www.facebook.com/AITAMOfficial" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-primary hover:text-white transition-all"><Facebook className="w-5 h-5" /></Link>
+              <Link href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-primary hover:text-white transition-all"><Twitter className="w-5 h-5" /></Link>
+              <Link href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-primary hover:text-white transition-all"><Linkedin className="w-5 h-5" /></Link>
+              <Link href="https://www.instagram.com/aitam_official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-primary hover:text-white transition-all"><Instagram className="w-5 h-5" /></Link>
+              <Link href="https://youtube.com/@aitamofficial?si=ql2E9XFNiE__WR5d" target="_blank" rel="noopener noreferrer" className="h-10 w-10 flex items-center justify-center rounded-full bg-slate-800 text-slate-400 hover:bg-primary hover:text-white transition-all"><Youtube className="w-5 h-5" /></Link>
             </div>
             <Link href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="mt-4">
               <Image 
