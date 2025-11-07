@@ -23,7 +23,7 @@ export function AppFooter() {
               The ultimate platform for students, alumni, and faculty to connect, share knowledge, and grow together.
             </p>
             <div className="flex gap-4 mt-2">
-              <Link href="#" className="text-slate-400 hover:text-white transition-colors"><Facebook className="w-6 h-6" /></Link>
+              <Link href="https://www.facebook.com/AITAMOfficial" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors"><Facebook className="w-6 h-6" /></Link>
               <Link href="#" className="text-slate-400 hover:text-white transition-colors"><Twitter className="w-6 h-6" /></Link>
               <Link href="#" className="text-slate-400 hover:text-white transition-colors"><Linkedin className="w-6 h-6" /></Link>
               <Link href="https://www.instagram.com/aitam_official?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors"><Instagram className="w-6 h-6" /></Link>
