@@ -56,9 +56,10 @@ export default function AlumniPage() {
               />
             </div>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {loading && (
             <>
+              <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
               <Skeleton className="h-56 w-full" />
@@ -66,7 +67,7 @@ export default function AlumniPage() {
           )}
 
           {error && (
-            <Alert variant="destructive" className="md:col-span-2 lg:col-span-3">
+            <Alert variant="destructive" className="md:col-span-2 lg:col-span-4">
                 <AlertTitle>Error</AlertTitle>
                 <AlertDescription>Could not load alumni data. Please try again later.</AlertDescription>
             </Alert>
@@ -93,7 +94,7 @@ export default function AlumniPage() {
           ))}
           
            {!loading && !error && (!filteredAlumni || filteredAlumni.length === 0) && (
-            <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+            <div className="md:col-span-2 lg:col-span-4 text-center py-12">
                 <UserX className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">No Alumni Found</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
