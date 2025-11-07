@@ -13,11 +13,12 @@ import { useUser, useDoc, useFirebase } from "@/firebase";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { doc, updateDoc } from 'firebase/firestore';
-import { updateProfile } from 'firebase/auth';
+import { updateProfile, sendPasswordResetEmail } from 'firebase/auth';
 import type { UserProfile } from '@/lib/database/users';
-import { Loader2, User, KeyRound } from 'lucide-react';
+import { Loader2, User, KeyRound, ShieldCheck } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
 
 const profileFormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -80,6 +81,23 @@ export default function SettingsPage() {
     } catch(e) {
         console.error(e);
         toast({ title: "Error", description: "Failed to update profile. Please try again.", variant: "destructive" });
+    }
+  };
+
+  const handlePasswordReset = async () => {
+    if (!user?.email || !auth) {
+        toast({ title: "Error", description: "Could not find your email address.", variant: "destructive" });
+        return;
+    }
+    try {
+        await sendPasswordResetEmail(auth, user.email);
+        toast({
+            title: "Password Reset Email Sent",
+            description: `An email has been sent to ${user.email} with instructions to reset your password.`,
+        });
+    } catch (e) {
+        console.error(e);
+        toast({ title: "Error", description: "Failed to send password reset email. Please try again.", variant: "destructive" });
     }
   };
 
@@ -182,6 +200,19 @@ export default function SettingsPage() {
                     </div>
                 </div>
 
+                <Separator />
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-medium flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-primary" /> Password & Security</h3>
+                     <div className="space-y-2">
+                        <Label>Change Password</Label>
+                        <p className="text-sm text-muted-foreground">Click the button below to send a password reset link to your email address.</p>
+                        <Button type="button" variant="outline" onClick={handlePasswordReset}>
+                           Send Password Reset Email
+                        </Button>
+                    </div>
+                </div>
+
 
                 </CardContent>
                 <CardFooter>
@@ -195,4 +226,5 @@ export default function SettingsPage() {
       </Form>
     </div>
   );
-}
+
+    
