@@ -23,7 +23,7 @@ import { Testimonials } from '@/components/dashboard/testimonials';
 import { GraduationCap, ExternalLink, Loader2 } from 'lucide-react';
 import { QuestionPopup } from '@/components/dashboard/question-popup';
 import { useToast } from '@/hooks/use-toast';
-import { useUser, useFirestore, useFirebase } from '@/firebase'; // Updated imports
+import { useUser, useFirebase } from '@/firebase'; // Updated imports
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 
@@ -55,7 +55,7 @@ const questionFormSchema = z.object({
 export default function DashboardPage() {
   const { toast } = useToast();
   
-  const { user, loading: userLoading } = useUser();
+  const { user } = useUser();
   const { firestore } = useFirebase();
 
   const form = useForm<z.infer<typeof questionFormSchema>>({
@@ -198,5 +198,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
