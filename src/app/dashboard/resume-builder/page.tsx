@@ -282,16 +282,16 @@ export default function ResumeBuilderPage() {
             <Form {...form}>
               <form className="space-y-4">
                 <FormField control={form.control} name="fullName" render={({ field }) => (
-                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="Enter your full name" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="email" render={({ field }) => (
-                    <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Email Address</FormLabel><FormControl><Input type="email" placeholder="Enter your email address" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="phone" render={({ field }) => (
-                    <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Phone Number</FormLabel><FormControl><Input type="tel" placeholder="Enter your phone number" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="linkedin" render={({ field }) => (
-                    <FormItem><FormLabel>LinkedIn Profile</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>LinkedIn Profile</FormLabel><FormControl><Input placeholder="Enter your LinkedIn profile URL" {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="industry" render={({ field }) => (
                     <FormItem><FormLabel>Target Industry</FormLabel><FormControl><Input placeholder="e.g., Software Engineering" {...field} /></FormControl><FormMessage /></FormItem>
@@ -472,3 +472,5 @@ export default function ResumeBuilderPage() {
     </div>
   );
 }
+
+    
