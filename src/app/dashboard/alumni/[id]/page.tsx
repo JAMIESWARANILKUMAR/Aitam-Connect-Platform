@@ -2,38 +2,32 @@
 'use client';
 
 import { useMemo } from 'react';
-import { doc } from 'firebase/firestore';
-import { useDoc, useFirestore } from '@/firebase';
-import type { UserProfile } from '@/lib/database/users';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
-  Briefcase,
-  GraduationCap,
   Award,
+  ChevronLeft,
+  Construction,
   Lightbulb,
   Linkedin,
   Mail,
+  Rss,
   UserX,
-  Construction,
-  ChevronLeft,
-  Rss
 } from 'lucide-react';
 import Link from 'next/link';
+import { alumni as mockAlumni } from "@/lib/database/alumni";
+import type { UserProfile } from '@/lib/database/users';
 
 export default function AlumniProfilePage({ params }: { params: { id: string } }) {
-  const firestore = useFirestore();
+  const { alumni, loading, error } = useMemo(() => {
+    const foundAlumni = mockAlumni.find(a => a.id === params.id);
+    return { alumni: foundAlumni, loading: false, error: !foundAlumni };
+  }, [params.id]);
 
-  const alumniDocRef = useMemo(() => {
-    if (!firestore || !params.id) return null;
-    return doc(firestore, 'users', params.id);
-  }, [firestore, params.id]);
-
-  const { data: alumni, loading, error } = useDoc<UserProfile>(alumniDocRef);
 
   const getInitials = (name?: string) => {
     if (!name) return 'A';
@@ -54,22 +48,13 @@ export default function AlumniProfilePage({ params }: { params: { id: string } }
     );
   }
 
-  if (error) {
-    return (
-      <Alert variant="destructive">
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>Could not load alumni profile. Please try again later.</AlertDescription>
-      </Alert>
-    );
-  }
-
-  if (!alumni) {
+  if (error || !alumni) {
     return (
        <div className="text-center py-12">
           <UserX className="mx-auto h-12 w-12 text-muted-foreground" />
           <h3 className="mt-4 text-lg font-semibold">Alumni Not Found</h3>
           <p className="mt-2 text-sm text-muted-foreground">
-              The profile you are looking for does not exist.
+              The profile you are looking for does not exist in the mock data.
           </p>
            <Button asChild variant="outline" className="mt-4">
                <Link href="/dashboard/alumni">
@@ -82,7 +67,6 @@ export default function AlumniProfilePage({ params }: { params: { id: string } }
   }
 
   const ProfileSection = ({ title, icon, children }: { title: string, icon: React.ReactNode, children: React.ReactNode }) => {
-    // Don't render the section if there are no children
     const hasContent = React.Children.count(children) > 0 && React.Children.toArray(children).some(child => child);
     if (!hasContent) return null;
 
