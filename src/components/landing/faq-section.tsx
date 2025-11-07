@@ -20,7 +20,7 @@ const generalFaqs = [
   },
   {
     question: 'Is there a mobile app available?',
-    answer: 'Yes, a mobile app is available on the Google Play Store, providing a seamless experience on your smartphone. You can find the download link in the footer of this page.',
+    answer: 'Currently, the AITAM Connect mobile app is under development and is not yet available on the Google Play Store. We are working hard to bring you a seamless mobile experience, and it will be released in a future update. Stay tuned for announcements!',
   },
   {
     question: 'How is my personal data handled?',
