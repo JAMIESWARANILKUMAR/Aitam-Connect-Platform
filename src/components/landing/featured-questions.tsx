@@ -26,7 +26,7 @@ export default function FeaturedQuestions() {
   };
 
   return (
-    <section id="featured-questions" className="w-full py-12 md:py-24 lg:py-32 bg-background">
+    <section id="featured-questions" className="w-full py-12 md:py-24 lg:py-32 bg-background bg-grid-pattern">
       <div className="container px-4 md:px-6">
         <div className="flex justify-center items-center gap-4 mb-8">
           <MessageSquareQuote className="w-10 h-10 text-primary" />
