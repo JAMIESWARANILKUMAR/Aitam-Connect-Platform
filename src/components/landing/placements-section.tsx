@@ -18,6 +18,16 @@ const companies = [
   'cisco.com',
   'trysol.com',
   'cognizant.com',
+  'techmahindra.com',
+  'ltimindtree.com',
+  'persistent.com',
+  'pinelabs.com',
+  'accenture.com',
+  'deloitte.com',
+  'oracle.com',
+  'dell.com',
+  'capgemini.com',
+  'amazon.com',
 ];
 
 const MarqueeRow = ({ logos, reverse = false }: { logos: string[]; reverse?: boolean }) => (
