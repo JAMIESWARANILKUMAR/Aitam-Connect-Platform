@@ -36,22 +36,43 @@ const companies = [
     { name: "CBRE", logo: "https://logo.clearbit.com/cbre.com" },
     { name: "Berkadia", logo: "https://logo.clearbit.com/berkadia.com" },
     { name: "Broadridge", logo: "https://logo.clearbit.com/broadridge.com" },
-  ];
+];
+
+const firstRow = companies.slice(0, Math.ceil(companies.length / 2));
+const secondRow = companies.slice(Math.ceil(companies.length / 2));
+
+const MarqueeRow = ({ logos, reverse = false }: { logos: {name: string, logo: string}[], reverse?: boolean }) => (
+    <div className="flex w-max items-center animate-marquee" style={{ animationDirection: reverse ? 'reverse' : 'normal' }}>
+        {[...logos, ...logos].map((company, index) => (
+            <div key={`${company.name}-${index}`} className="flex-shrink-0 w-48 h-24 flex justify-center items-center p-4">
+                <Image 
+                    src={company.logo} 
+                    alt={`${company.name} Logo`} 
+                    width={120} 
+                    height={60} 
+                    className="object-contain max-h-full max-w-full grayscale hover:grayscale-0 transition-all duration-300" 
+                    data-ai-hint="company logo"
+                />
+            </div>
+        ))}
+    </div>
+);
 
 export default function PlacementsSection() {
     return (
-        <section id="placements" className="w-full py-12 md:py-24 lg:py-32 bg-colorful-gradient">
+        <section id="placements" className="w-full py-12 md:py-24 lg:py-32 bg-colorful-gradient overflow-hidden">
           <div className="container px-4 md:px-6">
             <div className="flex justify-center items-center gap-4 mb-8">
               <Building2 className="w-10 h-10 text-primary" />
               <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-5xl">Our Alumni Work At</h2>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 mt-8 items-center">
-              {companies.map((company, index) => (
-                <div key={`${company.name}-${index}`} className="flex justify-center items-center">
-                  <Image src={company.logo} alt={`${company.name} Logo`} width={150} height={75} className="transition-all object-contain" data-ai-hint="company logo"/>
-                </div>
-              ))}
+          </div>
+          <div className="relative flex flex-col gap-4 mt-8">
+            <div className="w-full overflow-hidden">
+                <MarqueeRow logos={firstRow} />
+            </div>
+            <div className="w-full overflow-hidden">
+                <MarqueeRow logos={secondRow} reverse />
             </div>
           </div>
         </section>
