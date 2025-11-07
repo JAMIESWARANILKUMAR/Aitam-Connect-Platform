@@ -43,7 +43,7 @@ const technicalFaqs = [
   },
   {
     question: 'Who can I contact for technical support?',
-    answer: 'If you encounter any technical issues or have questions about the platform, please reach out to our support team at support@aitamconnect.adityatekkali.in. You can find our contact details in the footer.',
+    answer: "For general technical issues or questions, please reach out to our support team at support@aitamconnect.adityatekkali.in. For specific complaints, you can contact the administrator: Dr. D. Yugandhar (Professor & Associate Dean @ Alumni, C.G & SAC) at yugandhar.dasari@adityatekkali.edu.in.",
   },
 ];
 
