@@ -1,12 +1,12 @@
 
 "use client";
 
-import { Users, GraduationCap, Briefcase, UserCheck } from "lucide-react";
+import { Users, GraduationCap, Briefcase, UserCheck, School, UserRoundCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const stats = [
     {
-        icon: <GraduationCap className="w-8 h-8 text-primary" />,
+        icon: <School className="w-8 h-8 text-primary" />,
         value: "5.5K",
         label: "Student Strength",
         color: "text-blue-500"
@@ -14,19 +14,19 @@ const stats = [
     {
         icon: <Users className="w-8 h-8 text-primary" />,
         value: "11.5K",
-        label: "Alumni as on Date",
+        label: "Alumni Network",
         color: "text-green-500"
     },
     {
         icon: <Briefcase className="w-8 h-8 text-primary" />,
         value: "90%",
-        label: "Job Offers",
+        label: "Placement Success",
         color: "text-purple-500"
     },
     {
-        icon: <UserCheck className="w-8 h-8 text-primary" />,
+        icon: <UserRoundCheck className="w-8 h-8 text-primary" />,
         value: "270+",
-        label: "Faculties",
+        label: "Dedicated Faculty",
         color: "text-red-500"
     },
 ];
@@ -54,7 +54,7 @@ export default function StrengthSection() {
                             viewport={{ once: true, amount: 0.5 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                         >
-                            <div className="mb-4 rounded-full bg-muted p-4">
+                            <div className="mb-4 rounded-full bg-primary/10 p-4">
                                 {stat.icon}
                             </div>
                             <h3 className={`text-4xl font-bold ${stat.color}`}>{stat.value}</h3>
