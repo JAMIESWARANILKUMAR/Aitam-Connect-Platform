@@ -39,8 +39,8 @@ export default function AlumniSection() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
           {featuredAlumni.map((alumnus) => (
-            <Link key={alumnus.id} href={`/dashboard/alumni/${alumnus.id}`} className="block transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 hover:bg-card rounded-lg">
-                <Card className="flex h-full flex-col items-center justify-center p-6 text-center border-0 shadow-none bg-transparent">
+            <Link key={alumnus.id} href={`/dashboard/alumni/${alumnus.id}`} className="block transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 rounded-lg">
+                <Card className="flex h-full flex-col items-center justify-center p-6 text-center border bg-card/80 backdrop-blur-sm">
                     <Avatar className="h-24 w-24 mb-4">
                     <AvatarImage src={alumnus.profileImageUrl} data-ai-hint="person face" />
                     <AvatarFallback style={{ backgroundColor: nameToHslColor(alumnus.name) }}>
