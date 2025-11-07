@@ -128,4 +128,29 @@
   .animate-pulse-glow {
     animation: pulse-glow 2s infinite;
   }
+
+  .faq-divider {
+    @apply relative w-px;
+  }
+  .faq-divider::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400 to-transparent;
+    animation: glow 4s linear infinite;
+    opacity: 0.8;
+  }
+  
+  @keyframes glow {
+    0% {
+      filter: blur(4px) brightness(1);
+      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+    50% {
+      filter: blur(8px) brightness(2);
+      box-shadow: 0 0 20px #0ff, 0 0 30px #f0f, 0 0 40px #f0f;
+    }
+    100% {
+      filter: blur(4px) brightness(1);
+      box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+    }
+  }
 }

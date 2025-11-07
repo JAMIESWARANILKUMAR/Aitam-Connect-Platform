@@ -99,7 +99,7 @@ export default function FaqSection() {
             Have a question? We've got answers. If you can't find what you're looking for, feel free to contact us.
           </p>
         </div>
-        <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 mt-12">
+        <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-[1fr_auto_1fr] mt-12">
             
             {/* General Questions Column */}
             <div className="grid gap-4">
@@ -116,9 +116,13 @@ export default function FaqSection() {
                 </Accordion>
             </div>
 
+            {/* Divider */}
+            <div className="faq-divider hidden sm:block"></div>
+
+
             {/* Technical Questions Column */}
             <div className="grid gap-4">
-                <h3 className="text-xl font-bold text-primary">Features & Technical</h3>
+                <h3 className="text-xl font-bold text-primary">Features &amp; Technical</h3>
                  <Accordion type="single" collapsible className="w-full">
                     {technicalFaqs.map((faq, index) => (
                         <AccordionItem key={`tech-${index}`} value={`item-${index}`}>
