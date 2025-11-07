@@ -138,6 +138,10 @@
     animation: glow 4s linear infinite;
     opacity: 0.8;
   }
+
+  .footer-icon-gradient {
+    animation: color-cycle 5s linear infinite;
+  }
   
   @keyframes glow {
     0% {
@@ -152,5 +156,13 @@
       filter: blur(4px) brightness(1.2);
       box-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
     }
+  }
+
+  @keyframes color-cycle {
+    0%   { stroke: #29ABE2; }
+    25%  { stroke: #FFD700; }
+    50%  { stroke: #8A2BE2; }
+    75%  { stroke: #32CD32; }
+    100% { stroke: #29ABE2; }
   }
 }

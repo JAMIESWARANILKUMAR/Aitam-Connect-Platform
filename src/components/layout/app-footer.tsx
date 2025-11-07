@@ -44,39 +44,39 @@ export function AppFooter() {
           <div className="flex flex-col gap-4">
             <h3 className="text-lg font-bold text-white">Quick Links</h3>
             <div className="grid grid-cols-2 gap-2">
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="https://adityatekkali.edu.in/" target="_blank" rel="noopener noreferrer"><Globe className="mr-2 h-4 w-4" />Official Website</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="/dashboard/qna"><MessageSquareQuote className="mr-2 h-4 w-4" />Q&A Forum</Link>
-                </Button>
-                 <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="/dashboard/resume-builder"><FileText className="mr-2 h-4 w-4" />Resume Builder</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#gallery"><ImageIcon className="mr-2 h-4 w-4" />Gallery</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#news"><Newspaper className="mr-2 h-4 w-4" />News</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#alumni"><Users className="mr-2 h-4 w-4" />Alumni</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#leadership"><User className="mr-2 h-4 w-4" />Leadership</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#deans"><Users2 className="mr-2 h-4 w-4" />Deans</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#achievements"><Trophy className="mr-2 h-4 w-4" />Achievements</Link>
-                </Button>
-                <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#placements"><Building2 className="mr-2 h-4 w-4" />Placements</Link>
-                </Button>
-                 <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="#"><Book className="mr-2 h-4 w-4" />Blogs</Link>
-                </Button>
+                <Link href="https://adityatekkali.edu.in/" target="_blank" rel="noopener noreferrer" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Globe className="mr-3 h-5 w-5 footer-icon-gradient"/>Official Website
+                </Link>
+                <Link href="/dashboard/qna" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <MessageSquareQuote className="mr-3 h-5 w-5 footer-icon-gradient"/>Q&A Forum
+                </Link>
+                 <Link href="/dashboard/resume-builder" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <FileText className="mr-3 h-5 w-5 footer-icon-gradient"/>Resume Builder
+                </Link>
+                <Link href="#gallery" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <ImageIcon className="mr-3 h-5 w-5 footer-icon-gradient"/>Gallery
+                </Link>
+                <Link href="#news" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Newspaper className="mr-3 h-5 w-5 footer-icon-gradient"/>News
+                </Link>
+                <Link href="#alumni" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Users className="mr-3 h-5 w-5 footer-icon-gradient"/>Alumni
+                </Link>
+                <Link href="#leadership" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <User className="mr-3 h-5 w-5 footer-icon-gradient"/>Leadership
+                </Link>
+                <Link href="#deans" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Users2 className="mr-3 h-5 w-5 footer-icon-gradient"/>Deans
+                </Link>
+                <Link href="#achievements" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Trophy className="mr-3 h-5 w-5 footer-icon-gradient"/>Achievements
+                </Link>
+                <Link href="#placements" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Building2 className="mr-3 h-5 w-5 footer-icon-gradient"/>Placements
+                </Link>
+                 <Link href="#" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
+                    <Book className="mr-3 h-5 w-5 footer-icon-gradient"/>Blogs
+                </Link>
             </div>
           </div>
 
