@@ -163,7 +163,7 @@ export default function SettingsPage() {
                                 <AvatarImage src={user?.photoURL || undefined} data-ai-hint="profile picture" />
                                 <AvatarFallback>{getInitials(user?.displayName)}</AvatarFallback>
                             </Avatar>
-                             <div className="text-center">
+                             <div className="text-center mt-2">
                                 <p className="text-xs font-semibold text-muted-foreground">{userProfile?.designation === 'Student' ? 'Roll Number' : 'User ID'}</p>
                                 <p className="text-sm font-mono bg-muted px-2 py-1 rounded-md">{userProfile?.rollNumber || user?.uid}</p>
                             </div>
