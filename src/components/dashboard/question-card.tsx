@@ -40,9 +40,15 @@ interface QuestionCardProps {
 }
 
 export function QuestionCard({ question }: QuestionCardProps) {
-  const { data: author } = useDoc<UserProfile>((firestore) => doc(firestore, 'users', question.authorId));
-  const { user } = useUser();
   const { firestore } = useFirebase();
+
+  const authorDocRef = useMemo(() => {
+    if (!firestore) return null;
+    return doc(firestore, 'users', question.authorId);
+  }, [firestore, question.authorId]);
+
+  const { data: author } = useDoc<UserProfile>(authorDocRef);
+  const { user } = useUser();
   const { toast } = useToast();
 
   const [answerText, setAnswerText] = useState('');
@@ -200,5 +206,3 @@ export function QuestionCard({ question }: QuestionCardProps) {
     </Card>
   );
 }
-
-    

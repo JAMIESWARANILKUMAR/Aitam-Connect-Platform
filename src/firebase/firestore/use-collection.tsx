@@ -1,26 +1,18 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type {
-  Firestore,
   Query,
   DocumentData,
   QuerySnapshot,
 } from 'firebase/firestore';
 import { onSnapshot } from 'firebase/firestore';
-import { useFirestore } from '@/firebase/provider';
 
 export const useCollection = <T extends DocumentData>(
-  queryFactory: (firestore: Firestore) => Query<T> | null
+  query: Query<T> | null
 ) => {
-  const firestore = useFirestore();
   const [data, setData] = useState<T[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
-  const query = useMemo(
-    () => (firestore ? queryFactory(firestore) : null),
-    [firestore, queryFactory]
-  );
 
   useEffect(() => {
     if (!query) {

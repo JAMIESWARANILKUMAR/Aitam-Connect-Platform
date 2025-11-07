@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type {
   Firestore,
   DocumentReference,
@@ -10,17 +10,11 @@ import { onSnapshot } from 'firebase/firestore';
 import { useFirestore } from '@/firebase/provider';
 
 export const useDoc = <T extends DocumentData>(
-  refFactory: (firestore: Firestore) => DocumentReference<T> | null
+  docRef: DocumentReference<T> | null
 ) => {
-  const firestore = useFirestore();
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
-  const docRef = useMemo(
-    () => (firestore ? refFactory(firestore) : null),
-    [firestore, refFactory]
-  );
 
   useEffect(() => {
     if (!docRef) {

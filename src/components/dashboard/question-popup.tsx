@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   AlertDialog,
@@ -14,25 +14,29 @@ import {
   AlertDialogCancel,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useCollection } from "@/firebase";
+import { useCollection, useFirestore } from "@/firebase";
 import { collection, query, orderBy, limit, where, Timestamp } from "firebase/firestore";
 import type { Question } from "@/lib/database/questions";
 import { ArrowRight, MessageSquareQuote } from "lucide-react";
 
 export function QuestionPopup() {
   const [open, setOpen] = useState(false);
+  const firestore = useFirestore();
   
   // Get questions created in the last 10 days
-  const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
-  const { data: recentQuestions, loading } = useCollection<Question>(
-    (firestore) =>
-      query(
-        collection(firestore, "questions"),
-        where("createdAt", ">=", Timestamp.fromDate(tenDaysAgo)),
-        orderBy("createdAt", "desc"),
-        limit(5) // Show up to 5 recent questions
-      )
-  );
+  const tenDaysAgo = useMemo(() => new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), []);
+  
+  const recentQuestionsQuery = useMemo(() => {
+    if (!firestore) return null;
+    return query(
+      collection(firestore, "questions"),
+      where("createdAt", ">=", Timestamp.fromDate(tenDaysAgo)),
+      orderBy("createdAt", "desc"),
+      limit(5) // Show up to 5 recent questions
+    );
+  }, [firestore, tenDaysAgo]);
+
+  const { data: recentQuestions, loading } = useCollection<Question>(recentQuestionsQuery);
 
   useEffect(() => {
     // Only show the popup if there are recent questions and it hasn't been shown in this session
@@ -84,5 +88,3 @@ export function QuestionPopup() {
     </AlertDialog>
   );
 }
-
-    

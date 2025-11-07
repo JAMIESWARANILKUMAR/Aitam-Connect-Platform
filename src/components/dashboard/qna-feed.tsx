@@ -1,18 +1,23 @@
 "use client";
 
-import { useCollection } from "@/firebase";
+import { useCollection, useFirestore } from "@/firebase";
 import { QuestionCard } from "@/components/dashboard/question-card";
 import type { Question } from "@/lib/database/questions";
 import { collection, query, orderBy } from 'firebase/firestore';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { useMemo } from "react";
 
 
 export function QnaFeed() {
-  const { data: questions, loading, error } = useCollection<Question>(
-    (firestore) => query(collection(firestore, 'questions'), orderBy('createdAt', 'desc'))
-  );
+  const firestore = useFirestore();
+  const questionsQuery = useMemo(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, 'questions'), orderBy('createdAt', 'desc'))
+  }, [firestore]);
+  
+  const { data: questions, loading, error } = useCollection<Question>(questionsQuery);
 
   return (
     <div className="flex flex-col gap-6">

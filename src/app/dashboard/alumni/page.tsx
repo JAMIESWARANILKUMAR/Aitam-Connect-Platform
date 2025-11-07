@@ -1,14 +1,14 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, UserX } from "lucide-react";
-import { useCollection } from "@/firebase";
+import { useCollection, useFirestore } from "@/firebase";
 import type { UserProfile } from "@/lib/database/users";
 import { collection, query, where } from 'firebase/firestore';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -16,15 +16,19 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function AlumniPage() {
   const [searchTerm, setSearchTerm] = useState('');
+  const firestore = useFirestore();
 
-  const { data: alumni, loading, error } = useCollection<UserProfile>(
-    (firestore) => query(collection(firestore, 'users'), where('designation', '==', 'Alumni'))
-  );
+  const alumniQuery = useMemo(() => {
+    if (!firestore) return null;
+    return query(collection(firestore, 'users'), where('designation', '==', 'Alumni'));
+  }, [firestore]);
+
+  const { data: alumni, loading, error } = useCollection<UserProfile>(alumniQuery);
 
   const filteredAlumni = alumni?.filter(alum =>
     alum.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    alum.branch?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    alum.workingStatus?.toLowerCase().includes(searchTerm.toLowerCase())
+    (alum.branch && alum.branch.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (alum.workingStatus && alum.workingStatus.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const getInitials = (name?: string) => {

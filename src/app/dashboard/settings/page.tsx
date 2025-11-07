@@ -19,7 +19,7 @@ import { Loader2, User, KeyRound, ShieldCheck } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 const profileFormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -31,9 +31,12 @@ export default function SettingsPage() {
   const { toast } = useToast();
   const { firestore, auth } = useFirebase();
 
-  const { data: userProfile, loading: profileLoading, error: profileError } = useDoc<UserProfile>(
-    (db) => (user ? doc(db, "users", user.uid) : null)
-  );
+  const userDocRef = useMemo(() => {
+    if (!firestore || !user) return null;
+    return doc(firestore, "users", user.uid);
+  }, [firestore, user]);
+
+  const { data: userProfile, loading: profileLoading, error: profileError } = useDoc<UserProfile>(userDocRef);
 
   const form = useForm<z.infer<typeof profileFormSchema>>({
     resolver: zodResolver(profileFormSchema),
