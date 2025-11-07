@@ -1,96 +1,33 @@
 
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, UserX, ChevronLeft, ChevronRight } from "lucide-react";
-import { useFirestore } from "@/firebase";
+import { Search, UserX } from "lucide-react";
 import type { UserProfile } from "@/lib/database/users";
-import { collection, query, where, getDocs, limit, startAfter, orderBy, DocumentSnapshot } from 'firebase/firestore';
+import { alumni as mockAlumni } from "@/lib/database/alumni"; // Using mock data
 import { Skeleton } from '@/components/ui/skeleton';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-
-const PROFILES_PER_PAGE = 100;
 
 export default function AlumniPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const firestore = useFirestore();
-  const [alumni, setAlumni] = useState<UserProfile[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
-  const [page, setPage] = useState(0);
-  const [pageHistory, setPageHistory] = useState<(DocumentSnapshot | null)[]>([null]);
+  const [loading, setLoading] = useState(false); // Can be set to true to simulate loading
 
+  // Using mock data for demonstration
+  const alumni: UserProfile[] = mockAlumni;
 
-  const fetchAlumni = async (direction: 'next' | 'prev' | 'start' = 'start') => {
-    if (!firestore) return;
-    setLoading(true);
-    setError(null);
-
-    try {
-        let alumniQuery;
-        const baseQuery = query(
-            collection(firestore, 'users'),
-            where('designation', '==', 'Alumni'),
-            orderBy('name')
-        );
-
-        if (direction === 'next' && lastVisible) {
-            alumniQuery = query(baseQuery, startAfter(lastVisible), limit(PROFILES_PER_PAGE));
-        } else if (direction === 'prev' && page > 0) {
-            const prevCursor = pageHistory[page-1];
-            alumniQuery = prevCursor ? query(baseQuery, startAfter(prevCursor), limit(PROFILES_PER_PAGE)) : query(baseQuery, limit(PROFILES_PER_PAGE));
-        } else {
-             alumniQuery = query(baseQuery, limit(PROFILES_PER_PAGE));
-        }
-        
-        const documentSnapshots = await getDocs(alumniQuery);
-        
-        const alumniData: UserProfile[] = documentSnapshots.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-        } as UserProfile));
-
-        setAlumni(alumniData);
-
-        const lastDoc = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-        setLastVisible(lastDoc || null);
-
-        if (direction === 'next') {
-            setPage(p => p + 1);
-            setPageHistory(h => [...h, lastDoc]);
-        } else if (direction === 'prev' && page > 0) {
-            setPage(p => p - 1);
-            setPageHistory(h => h.slice(0, h.length -1));
-        } else {
-            setPage(0);
-            setPageHistory([null, lastDoc]);
-        }
-
-    } catch (e: any) {
-      console.error(e);
-      setError(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAlumni('start');
-  }, [firestore]);
-
-
-  const filteredAlumni = alumni?.filter(alum =>
-    alum.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (alum.branch && alum.branch.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (alum.workingStatus && alum.workingStatus.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const filteredAlumni = useMemo(() => {
+    if (!alumni) return [];
+    return alumni.filter(alum =>
+      alum.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (alum.branch && alum.branch.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (alum.workingStatus && alum.workingStatus.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  }, [alumni, searchTerm]);
 
   const getInitials = (name?: string) => {
     if (!name) return "A";
@@ -127,17 +64,10 @@ export default function AlumniPage() {
         </CardHeader>
         <CardContent className="grid gap-6 md:grid-cols-2 lg:grid-cols-5">
           {loading && (
-            Array.from({ length: PROFILES_PER_PAGE }).map((_, i) => <Skeleton key={i} className="h-56 w-full" />)
+            Array.from({ length: 10 }).map((_, i) => <Skeleton key={i} className="h-56 w-full" />)
           )}
 
-          {error && (
-            <Alert variant="destructive" className="md:col-span-2 lg:col-span-5">
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>Could not load alumni data. Please try again later.</AlertDescription>
-            </Alert>
-          )}
-
-          {!loading && !error && filteredAlumni && filteredAlumni.length > 0 && filteredAlumni.map((alum) => (
+          {!loading && filteredAlumni && filteredAlumni.length > 0 && filteredAlumni.map((alum) => (
             <Link key={alum.id} href={`/dashboard/alumni/${alum.id}`} className="block transition-all duration-300 ease-in-out hover:shadow-xl hover:-translate-y-2 hover:bg-card rounded-lg">
               <Card className="flex h-full flex-col items-center justify-center p-6 text-center border-0 shadow-none">
                 <Avatar className="h-24 w-24 mb-4">
@@ -159,7 +89,7 @@ export default function AlumniPage() {
             </Link>
           ))}
           
-           {!loading && !error && (!filteredAlumni || filteredAlumni.length === 0) && (
+           {!loading && (!filteredAlumni || filteredAlumni.length === 0) && (
             <div className="md:col-span-2 lg:col-span-5 text-center py-12">
                 <UserX className="mx-auto h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">No Alumni Found</h3>
@@ -169,15 +99,6 @@ export default function AlumniPage() {
             </div>
            )}
         </CardContent>
-         <div className="flex justify-center items-center gap-4 p-4">
-            <Button onClick={() => fetchAlumni('prev')} disabled={page === 0 || loading}>
-                <ChevronLeft className="mr-2 h-4 w-4" /> Previous
-            </Button>
-            <span className="text-sm font-medium">Page {page + 1}</span>
-            <Button onClick={() => fetchAlumni('next')} disabled={alumni.length < PROFILES_PER_PAGE || loading}>
-                Next <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-        </div>
       </Card>
     </div>
   );
