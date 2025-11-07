@@ -31,7 +31,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="AITAM Connect" />
-        <link rel="apple-touch-icon" href="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png" />
+        <link rel="apple-touch-icon" href="https://adityatekkali.edu.in/assets/images/logo/logo3.webp" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#1890ff" />

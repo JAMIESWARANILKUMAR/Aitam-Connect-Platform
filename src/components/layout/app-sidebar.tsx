@@ -44,7 +44,7 @@ export function AppSidebar() {
       <SidebarHeader className="h-16 flex items-center justify-center p-2 group-data-[collapsible=icon]:justify-center">
         <div className="flex items-center gap-2">
           <Image
-            src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+            src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
             alt="AITAM Connect Logo"
             width={40}
             height={40}

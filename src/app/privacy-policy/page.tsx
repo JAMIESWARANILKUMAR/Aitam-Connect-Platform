@@ -93,7 +93,7 @@ export default function PrivacyPolicyPage() {
        <header className="px-4 lg:px-6 h-16 flex items-center justify-center border-b w-full sticky top-0 bg-background/90 backdrop-blur-sm z-20">
         <Link href="/" className="flex items-center gap-2">
             <Image
-                src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+                src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
                 alt="AITAM Connect Logo"
                 width={40}
                 height={40}

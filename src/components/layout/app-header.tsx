@@ -35,7 +35,7 @@ export function AppHeader() {
         <SidebarTrigger className="md:hidden" />
         <Link href="/dashboard" className="flex items-center gap-2">
           <Image
-            src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+            src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
             alt="AITAM Connect Logo"
             width={40}
             height={40}

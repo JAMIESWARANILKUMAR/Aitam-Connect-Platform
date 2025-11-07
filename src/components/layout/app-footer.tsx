@@ -13,7 +13,7 @@ export function AppFooter() {
           {/* Column 1: Logo and Socials */}
           <div className="flex flex-col gap-4">
              <Image
-              src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+              src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
               alt="AITAM Connect Logo"
               width={180}
               height={180}

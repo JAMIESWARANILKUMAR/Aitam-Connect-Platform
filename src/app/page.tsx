@@ -43,7 +43,7 @@ export default function LandingPage() {
         <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
                 <Image
-                    src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+                    src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
                     alt="AITAM Connect Logo"
                     width={40}
                     height={40}
@@ -68,7 +68,7 @@ export default function LandingPage() {
               <nav className="grid gap-6 text-lg font-medium">
                 <Link href="#" className="flex items-center gap-2 text-lg font-semibold mb-4">
                   <Image
-                    src="https://cdn.jumpshare.com/images/AtpYWE8GBPEVfWnMRei1.png"
+                    src="https://adityatekkali.edu.in/assets/images/logo/logo3.webp"
                     alt="AITAM Connect Logo"
                     width={120}
                     height={120}
