@@ -30,7 +30,6 @@ export function AppSidebar() {
   const menuItems = [
     { href: "/dashboard", icon: Home, label: "Home" },
     { href: "/dashboard/qna", icon: MessageSquareQuote, label: "Q&A Forum" },
-    { href: "/dashboard/ppt-maker", icon: LayoutTemplate, label: "PPT Maker" },
     { href: "/dashboard/resume-builder", icon: FileText, label: "Resume Builder" },
     { href: "/dashboard/alumni", icon: Users, label: "Alumni Network" },
   ];

@@ -51,9 +51,6 @@ export function AppFooter() {
                     <Link href="/dashboard/qna"><MessageSquareQuote className="mr-2 h-4 w-4" />Q&A Forum</Link>
                 </Button>
                  <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
-                    <Link href="/dashboard/ppt-maker"><LayoutTemplate className="mr-2 h-4 w-4" />PPT Maker</Link>
-                </Button>
-                 <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
                     <Link href="/dashboard/resume-builder"><FileText className="mr-2 h-4 w-4" />Resume Builder</Link>
                 </Button>
                 <Button asChild variant="link" className="text-slate-400 justify-start p-0 h-auto hover:text-white transition-colors">
