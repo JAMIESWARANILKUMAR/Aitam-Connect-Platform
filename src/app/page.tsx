@@ -1,5 +1,5 @@
 
-"use client";
+'use client';
 
 import Image from "next/image";
 import Link from "next/link";
@@ -103,9 +103,9 @@ export default function LandingPage() {
         </div>
       </header>
        <nav className="hidden md:flex items-center justify-center w-full bg-primary text-primary-foreground shadow-lg sticky top-16 z-10">
-        <div className="flex gap-1 lg:gap-2 p-1">
+        <div className="flex flex-wrap justify-center gap-1 p-1">
           {navItems.map((item) => (
-            <Link key={item.name} href={item.href} className="flex items-center text-sm font-medium px-4 py-2 rounded-md hover:bg-primary-foreground/10 active:bg-primary-foreground/20 transition-all duration-300 ease-in-out transform hover:scale-105">
+            <Link key={item.name} href={item.href} className="flex items-center text-sm font-medium px-3 py-2 lg:px-4 lg:py-2.5 lg:text-base rounded-md hover:bg-primary-foreground/10 active:bg-primary-foreground/20 transition-all duration-300 ease-in-out transform hover:scale-105">
               {item.icon}
               {item.name}
             </Link>
