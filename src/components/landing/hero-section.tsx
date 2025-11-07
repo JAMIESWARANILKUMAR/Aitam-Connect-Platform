@@ -29,14 +29,14 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="flex flex-col justify-center space-y-4 text-white bg-black/30 backdrop-blur-sm p-8 rounded-xl border border-white/20"
+            className="flex flex-col justify-center space-y-4 text-center items-center lg:items-start lg:text-left"
           >
             <div className="space-y-4">
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-                className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white shadow-lg"
+                className="text-4xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white [text-shadow:0_4px_8px_rgba(0,0,0,0.4)]"
               >
                 Welcome to AITAM Connect
               </motion.h1>
@@ -44,7 +44,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-                className="max-w-[600px] text-gray-200 md:text-xl"
+                className="max-w-[600px] text-gray-200 md:text-xl [text-shadow:0_2px_4px_rgba(0,0,0,0.5)]"
               >
                 The ultimate platform for students, alumni, and faculty to
                 connect, share knowledge, and grow together.
