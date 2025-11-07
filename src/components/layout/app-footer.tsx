@@ -125,8 +125,8 @@ export function AppFooter() {
           </div>
 
           {/* Column 4: Legal */}
-          <div className="flex flex-col gap-4 rounded-lg bg-slate-800/50 p-4 transform transition-all duration-300 hover:scale-105 hover:bg-slate-800">
-            <h3 className="text-lg font-bold text-white flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-cyan-400"/>Legal</h3>
+          <div className="flex flex-col gap-4">
+            <h3 className="text-lg font-bold text-white">Legal</h3>
              <ul className="flex flex-col gap-2">
                 <li>
                     <Link href="/privacy-policy" className="flex items-center text-slate-400 hover:text-white hover:translate-x-1 transition-all">
