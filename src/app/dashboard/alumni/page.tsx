@@ -15,7 +15,7 @@ import { collection, query, where, getDocs, limit, startAfter, orderBy, Document
 import { Skeleton } from '@/components/ui/skeleton';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const PROFILES_PER_PAGE = 10;
+const PROFILES_PER_PAGE = 100;
 
 export default function AlumniPage() {
   const [searchTerm, setSearchTerm] = useState('');
