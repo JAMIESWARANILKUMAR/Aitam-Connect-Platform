@@ -60,6 +60,24 @@ const technicalFaqs = [
             </p>
           </div>
         </div>
+        <div>
+            <p className="font-semibold text-slate-300">For Product-Related Complaints:</p>
+            <p>For issues related to the product itself, you can contact the developer:</p>
+             <div className="mt-2 pl-4 border-l-2 border-primary">
+                <p className="font-bold">Jami Eswar Anil Kumar</p>
+                <p className="text-sm">Student, B.Tech CSM Department</p>
+                <p className="text-sm">Founder of Vyntyra Consultancy Services</p>
+                 <p className="text-sm mt-1">
+                  <strong>Email (Official):</strong> <a href="mailto:founder.vyntyraconsultancyservices@outlook.com" className="text-primary underline">founder.vyntyraconsultancyservices@outlook.com</a>
+                </p>
+                <p className="text-sm">
+                  <strong>Email (Personal):</strong> <a href="mailto:yourstrulyjamianil@gmail.com" className="text-primary underline">yourstrulyjamianil@gmail.com</a>
+                </p>
+                <p className="text-sm">
+                  <strong>Phone:</strong> +91 6301588867
+                </p>
+            </div>
+        </div>
       </div>
     ),
   },
