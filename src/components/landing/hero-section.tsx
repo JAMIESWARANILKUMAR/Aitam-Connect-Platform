@@ -59,7 +59,7 @@ export default function HeroSection() {
               <Button asChild size="lg" className="animate-pulse-glow">
                 <Link href="/login">Get Started</Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20">
+              <Button asChild size="lg" variant="outline" className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20 transition-transform duration-300 ease-in-out hover:scale-105">
                 <Link href="https://www.easytourz.com/BT-EmabedTour/all/7f788f014369a2c3" target="_blank" rel="noopener noreferrer">Take me College Tour</Link>
               </Button>
             </motion.div>
