@@ -30,7 +30,12 @@ export function LoginForm() {
     try {
       await signInWithPopup(auth, provider);
       router.push("/dashboard");
-    } catch (error) {
+    } catch (error: any) {
+      // Gracefully handle the case where the user closes the popup.
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.log("Sign-in popup closed by user.");
+        return;
+      }
       console.error("Error signing in with Google: ", error);
       toast({
         title: "Error",
